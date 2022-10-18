@@ -11,6 +11,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@fontsource/nunito": "^4.5.11",
     "eslint-plugin-simple-import-sort": "^8.0.0",
     "next": "12.3.1",
     "react": "18.2.0",

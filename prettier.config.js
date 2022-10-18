@@ -9,9 +9,5 @@ module.exports = {
   trailingComma: "none",
   semi: false,
   proseWrap: "always",
-  printWidth: 100,
-  jsxSingleQuote: true,
-  importOrder: ["^@core/(.*)$", "^@server/(.*)$", "^@ui/(.*)$", "^[./]"],
-  importOrderSeparation: true,
-  importOrderSortSpecifiers: true
+  printWidth: 100
 }
