@@ -66,7 +66,7 @@ const Home: NextPage = () => {
   }, [url])
 
   return (
-    <Container className="mx-auto flex flex-col gap-y-8 divide-y">
+    <Container className="m-auto flex flex-col gap-y-8 divide-y">
       <div>
         <h1 className="text-2xl font-bold md:text-4xl">carpe-retractum</h1>
         <h2 className="mt-2 text-gray-600">

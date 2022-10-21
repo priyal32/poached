@@ -13,7 +13,7 @@ type Props = {
 
 const Layout: React.FunctionComponent<Props> = ({ children }) => {
   return (
-    <main>
+    <main className="flex min-h-screen flex-col justify-center">
       {/* <Header /> */}
       {children}
     </main>

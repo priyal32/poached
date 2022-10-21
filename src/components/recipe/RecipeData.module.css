@@ -39,7 +39,7 @@
     @apply col-start-1 col-end-6 row-start-1 row-end-7 mt-12 lg:mt-0;
 
     & .ingredients_wrapper {
-      @apply flex flex-col lg:sticky lg:top-8 lg:left-0 lg:mt-[calc(125%+3rem)] lg:h-[calc(100vh-11rem)];
+      @apply flex flex-col lg:sticky lg:top-8 lg:left-0 lg:mt-[calc(125%+3rem)];
 
       & header {
         @apply flex items-center justify-between;
