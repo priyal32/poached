@@ -80,15 +80,9 @@ const RecipeInner: React.FunctionComponent<Props> = ({ data, url }) => {
 const RecipeData: React.FunctionComponent<Props> = ({ data, url, isRequested }) => {
   return (
     <>
-      {!isRequested ? (
-        data?.results ? (
-          <RecipeInner data={data.results} url={url} />
-        ) : (
-          <NoResult message={data?.message} />
-        )
-      ) : (
-        <RecipeDataSkeleton />
-      )}
+      {isRequested && <RecipeDataSkeleton />}
+      {!isRequested && data?.results && <RecipeInner data={data.results} url={url} />}
+      {!isRequested && url && !data?.results && <NoResult message={data?.message} />}
     </>
   )
 }

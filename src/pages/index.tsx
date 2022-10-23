@@ -16,7 +16,7 @@ const Home: NextPage = () => {
   const router = useRouter()
   const { url } = router.query as QueryParam
   const [value, setValue] = React.useState<string>(url)
-  const [isRequested, setIsRequested] = React.useState<boolean>(true)
+  const [isRequested, setIsRequested] = React.useState<boolean>(false)
   const [recipeData, setRecipeData] = React.useState<any>(undefined)
 
   async function fetchRecipe(targetUrl: string) {
