@@ -16,7 +16,6 @@ const Home: NextPage = () => {
   const router = useRouter()
   const { url } = router.query as QueryParam
   const [value, setValue] = React.useState<string>(url)
-  const [modal, setModal] = React.useState<boolean>(false)
   const [isRequested, setIsRequested] = React.useState<boolean>(false)
   const [recipeData, setRecipeData] = React.useState<any>(undefined)
 
@@ -34,7 +33,6 @@ const Home: NextPage = () => {
         .then((res) => res.json())
         .then((data) => {
           setRecipeData(data)
-          setModal(true)
           setIsRequested(false)
         })
     } catch (err) {
@@ -53,10 +51,6 @@ const Home: NextPage = () => {
     } else {
       console.error("Make sure you entered the correct url")
     }
-  }
-
-  function onModalClose() {
-    setModal(false)
   }
 
   React.useEffect(() => {
@@ -105,7 +99,15 @@ const Home: NextPage = () => {
         <div className="ml-3">
           <b>Information</b>
           <p className="text-sm">
-            The website u entered is not supported? open an <span className="underline">issue</span>{" "}
+            The website u entered is not supported? open an{" "}
+            <a
+              href="https://github.com/arcetros/retractum-api/issues"
+              target="_blank"
+              className="underline"
+              rel="noreferrer"
+            >
+              issue
+            </a>{" "}
             and we&apos;ll do our best to add it.
           </p>
         </div>

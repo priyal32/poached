@@ -13,7 +13,6 @@ type Props = {
 }
 
 const RecipeInner: React.FunctionComponent<Props> = ({ data, url }) => {
-  console.log(data)
   const extractedDomain = extractDomain(url)
   return (
     <article className={s.root}>
@@ -78,9 +77,7 @@ const RecipeInner: React.FunctionComponent<Props> = ({ data, url }) => {
 }
 
 const RecipeData: React.FunctionComponent<Props> = ({ data, url, isRequested }) => {
-  return (
-    <main>{data?.results ? <RecipeInner data={data.results} url={url} /> : data?.message}</main>
-  )
+  return <>{data?.results ? <RecipeInner data={data.results} url={url} /> : data?.message}</>
 }
 
 export default RecipeData
