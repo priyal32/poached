@@ -16,7 +16,7 @@ const Home: NextPage = () => {
   const router = useRouter()
   const { url } = router.query as QueryParam
   const [value, setValue] = React.useState<string>(url)
-  const [isRequested, setIsRequested] = React.useState<boolean>(false)
+  const [isRequested, setIsRequested] = React.useState<boolean>(true)
   const [recipeData, setRecipeData] = React.useState<any>(undefined)
 
   async function fetchRecipe(targetUrl: string) {
@@ -63,7 +63,7 @@ const Home: NextPage = () => {
     <Container className="m-auto flex flex-col gap-y-8 divide-y">
       <div>
         <h1 className="text-2xl font-bold md:text-4xl">carpe-retractum</h1>
-        <h2 className="mt-2 text-gray-600">
+        <h2 className="mt-2 text-gray-500">
           Generate recipe without clutters from various websites with an ease.
         </h2>
         <form

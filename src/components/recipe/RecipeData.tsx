@@ -4,7 +4,9 @@ import Image from "next/image"
 import React from "react"
 import { FiLink } from "react-icons/fi"
 
+import NoResult from "./NoResult"
 import s from "./RecipeData.module.css"
+import RecipeDataSkeleton from "./RecipeDataSkeleton"
 
 type Props = {
   data: any
@@ -17,7 +19,6 @@ const RecipeInner: React.FunctionComponent<Props> = ({ data, url }) => {
   return (
     <article className={s.root}>
       <div className={s.recipe_head_layout}>
-        {" "}
         <h1 className="text-2xl font-bold">{data.name}</h1>
         <span className="flex text-gray-500">
           from{" "}
@@ -77,7 +78,19 @@ const RecipeInner: React.FunctionComponent<Props> = ({ data, url }) => {
 }
 
 const RecipeData: React.FunctionComponent<Props> = ({ data, url, isRequested }) => {
-  return <>{data?.results ? <RecipeInner data={data.results} url={url} /> : data?.message}</>
+  return (
+    <>
+      {!isRequested ? (
+        data?.results ? (
+          <RecipeInner data={data.results} url={url} />
+        ) : (
+          <NoResult message={data?.message} />
+        )
+      ) : (
+        <RecipeDataSkeleton />
+      )}
+    </>
+  )
 }
 
 export default RecipeData
