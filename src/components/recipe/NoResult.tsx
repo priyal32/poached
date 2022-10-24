@@ -2,7 +2,7 @@ import Image from "next/image"
 import React from "react"
 
 type Props = {
-  message: string
+  message?: string
 }
 
 const NoResult: React.FunctionComponent<Props> = ({ message }) => {

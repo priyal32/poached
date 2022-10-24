@@ -13,8 +13,16 @@
     -webkit-appearance: none;
   }
 
+  @screen lg {
+    .scroll::-webkit-scrollbar:horizontal {
+      width: 0.125rem;
+      height: 2rem;
+      -webkit-appearance: none;
+    }
+  }
+
   .scroll::-webkit-scrollbar-thumb {
-    background-color: black;
+    background-color: #171717;
     border: 0.9375rem solid #fcfeff;
   }
 }

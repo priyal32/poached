@@ -3,6 +3,7 @@ import { useRouter } from "next/router"
 import React from "react"
 import { FiInfo, FiSearch } from "react-icons/fi"
 
+import type { Result } from "@/components/recipe/recipe"
 import RecipeData from "@/components/recipe/RecipeData"
 import { Container } from "@/components/ui"
 import LoadingDots from "@/components/ui/Loading-dots/LoadingDots"
@@ -15,9 +16,9 @@ type QueryParam = {
 const Home: NextPage = () => {
   const router = useRouter()
   const { url } = router.query as QueryParam
-  const [value, setValue] = React.useState<string>(url)
+  const [value, setValue] = React.useState<string>(url || "")
   const [isRequested, setIsRequested] = React.useState<boolean>(false)
-  const [recipeData, setRecipeData] = React.useState<any>(undefined)
+  const [recipeData, setRecipeData] = React.useState<Result>()
 
   async function fetchRecipe(targetUrl: string) {
     setIsRequested(true)
