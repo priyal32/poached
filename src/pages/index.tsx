@@ -34,7 +34,7 @@ export const getStaticProps: GetStaticProps = async () => {
       stats: {
         starGazer: _stats.stargazers_count,
         origin: _stats.html_url,
-        forkUrl: "https://github.com/arcetros/transcendent/fork"
+        forkUrl: "https://github.com/arcetros/poached/fork"
       }
     },
     revalidate: 10
@@ -93,7 +93,7 @@ export default function Home({ stats }: HomePageProps) {
     <Container className="m-auto flex flex-col gap-y-8 divide-y">
       <header>
         <div className="flex flex-col items-start justify-between lg:flex-row   lg:items-center">
-          <h1 className="text-2xl font-bold md:text-4xl">transcendent</h1>
+          <h1 className="text-2xl font-bold md:text-4xl">poached</h1>
           <div className="mt-1 flex space-x-3 lg:mt-0 lg:ml-3">
             <a
               href={stats.origin}
@@ -153,7 +153,7 @@ export default function Home({ stats }: HomePageProps) {
           <p className="text-sm">
             The website u entered is not supported? open an{" "}
             <a
-              href="https://github.com/arcetros/retractum-api/issues"
+              href="https://github.com/arcetros/poached/issues"
               target="_blank"
               className="underline"
               rel="noreferrer"
