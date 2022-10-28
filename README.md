@@ -1,34 +1,42 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align="center">
+    <img align=center src="https://res.cloudinary.com/poggies/image/upload/v1666958899/j2jiuewb4fpcfzm3nea0.png" alt="Poached" width="100" /></br>
+</p>
+<p align="center">
+    <strong>Poached</strong>
+    <br/>
+    <i>Too much to read, pick out just the ingredients and instructions!</i>
+</p>
 
-## Getting Started
+# Overview
+Poached is a website that serves the users only the essential bits of a lots of annoying clutters that has nothing to do with the food itself.
 
-First, run the development server:
+Check out the live site [here](https://poached.vercel.app/).
 
-```bash
-npm run dev
-# or
-yarn dev
+## Getting started
+```
+# Clone this repository
+
+$ git clone https://github.com/arcetros/poached
+
+# Go into the repository
+
+$ cd poached
+
+# Install dependencies for the frontend and run the server
+
+$ yarn && yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ⚠ The website that I want to use is not supported
+Don't panic, just open an issue [here](https://github.com/arcetros/poached/issues) we'll do our best  to add it. 
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Contributing
+And if you're that someone willing to help I welcome your Pull requests that keep the scraping up to date, support a new one or even another features!
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+I will give it my best to keep this project up to date and with your help this goal is much more achievable.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Thank you 😎
 
-## Learn More
+##  License
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Distributed under the MIT License. See [LICENSE](https://github.com/arcetros/poached/blob/main/LICENSE) for more information.
