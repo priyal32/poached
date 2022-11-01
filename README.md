@@ -37,6 +37,8 @@ I will give it my best to keep this project up to date and with your help this g
 
 Thank you 😎
 
+## Acknowledgements
+- Beautiful [stryve.life](https://stryve.life/) recipe article layout by Rob Simpson. Check out his shots [here](https://dribbble.com/robsimpson). 
 ##  License
 
 Distributed under the MIT License. See [LICENSE](https://github.com/arcetros/poached/blob/main/LICENSE) for more information.
