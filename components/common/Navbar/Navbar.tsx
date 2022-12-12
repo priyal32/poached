@@ -1,4 +1,5 @@
 import { clearAllBodyScrollLocks, disableBodyScroll } from "body-scroll-lock"
+import Link from "next/link"
 import React from "react"
 import { BsGear } from "react-icons/bs"
 import { FaGithub } from "react-icons/fa"
@@ -23,7 +24,9 @@ const Navbar: React.FunctionComponent<{ isOpen: boolean; toggleNavBar: () => voi
       <div className="flex h-full w-full flex-col md:relative md:w-auto md:justify-between">
         <section>
           <div className="border-neutral fixed z-50 flex h-20 w-full items-center justify-between border-b border-r border-dark-neutral bg-dark-2 px-5 md:relative md:w-auto md:bg-dark-1">
-            <h1 className="hidden font-headline text-xl font-medium md:block">Poached</h1>
+            <Link className="hidden md:block" href="/">
+              <h1 className="hidden font-headline text-xl font-medium md:block">Poached</h1>
+            </Link>
             <div onClick={toggleNavBar} className="block rounded border border-neutral-700 p-3 md:hidden">
               <FiAlignRight className="h-5 w-5" />
             </div>

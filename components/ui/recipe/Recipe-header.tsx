@@ -13,7 +13,7 @@ type RecipeHeader = {
 const RecipeHeader: React.FunctionComponent<RecipeHeader> = ({ handleSubmitForm, isRequested, setValue, value }) => {
   return (
     <React.Fragment>
-      <div className="z-50 flex h-auto w-full flex-col justify-between md:bg-dark-1 md:px-4 md:py-4 lg:h-20 lg:flex-row lg:items-center lg:px-8 lg:py-0">
+      <div className="z-50 flex h-auto w-full flex-col justify-between md:bg-dark-1 md:px-4 md:py-4 lg:flex-row lg:items-center lg:px-8">
         <header className="fixed top-4 right-3 w-[calc(100%-85px)] md:relative md:top-0 md:right-0 md:my-auto md:inline-flex md:h-full md:w-full md:items-center">
           <RecipeImportForm handleSubmitForm={handleSubmitForm} isRequested={isRequested} setValue={setValue} value={value} />
         </header>

@@ -8,10 +8,11 @@ type Props = {
   setValue: (value: React.SetStateAction<string>) => void
   value?: string
   isRequested: boolean
+  placeHolder?: string
   wfull?: boolean
 }
 
-const RecipeImportForm: React.FunctionComponent<Props> = ({ handleSubmitForm, setValue, value, isRequested, wfull = false }) => {
+const RecipeImportForm: React.FunctionComponent<Props> = ({ handleSubmitForm, setValue, value, isRequested, wfull = false, placeHolder = "Paste the URL of a recipe" }) => {
   return (
     <form onSubmit={handleSubmitForm} className={`relative top-0 h-12 rounded-lg bg-dark-neutral shadow-md lg:shadow-none ${wfull ? "w-full" : "w-full lg:w-[350px]"}`}>
       <label htmlFor="urlKeyword" aria-label="urlKeyword">
@@ -24,7 +25,7 @@ const RecipeImportForm: React.FunctionComponent<Props> = ({ handleSubmitForm, se
         autoComplete="off"
         value={value || ""}
         className="h-full w-[calc(100%-75px)] rounded-lg bg-transparent pl-4 text-sm focus:outline-none md:pl-12"
-        placeholder="Paste the URL of a recipe"
+        placeholder={placeHolder}
       />
       <button
         type="submit"

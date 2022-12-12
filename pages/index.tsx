@@ -64,18 +64,22 @@ export const Home: NextPage = () => {
   const importProps = { handleSubmitForm, isRequested, setValue, value }
 
   return (
-    <section className="flex flex-col">
-      {recipeData && <RecipeHeader {...importProps} />}
+    <section className="m-auto flex h-full flex-col">
+      {recipeData?.results && <RecipeHeader {...importProps} />}
       {!recipeData && !isRequested && (
-        <div className="absolute top-0 mx-auto flex h-screen max-w-xl flex-col justify-center px-4 sm:px-0 lg:relative">
-          <Image src="/poached_logo.png" alt="Poached Logo" width={150} height={150} className="relative mx-auto object-cover" />
-          <p className="mb-6 text-center font-headline text-lg font-bold lg:text-xl">Get just the instructions & ingredients for any recipe. No popups, ads, or annoying clutters</p>
-          <RecipeImportForm {...importProps} wfull />
-        </div>
+        <Container className="m-auto flex flex-col">
+          <div className="m-auto flex max-w-xl flex-col items-center justify-center px-4 sm:px-0">
+            <Image src="/poached_logo.png" alt="Poached Logo" width={150} height={150} className="relative mx-auto object-cover" />
+            <p className="mb-6 text-center font-headline text-lg font-bold lg:text-xl">Get just the instructions & ingredients for any recipe. No popups, ads, or annoying clutters</p>
+            <RecipeImportForm {...importProps} wfull />
+          </div>
+        </Container>
       )}
-      <Container className="m-auto flex flex-col gap-y-8">
-        <HomepageRecipe data={recipeData} isRequested={isRequested} url={url} />
-      </Container>
+      {url && (
+        <Container className="m-auto flex flex-col gap-y-8">
+          <HomepageRecipe {...importProps} data={recipeData} isRequested={isRequested} url={url} />
+        </Container>
+      )}
     </section>
   )
 }

@@ -10,7 +10,7 @@ interface Props {
 
 const Container: React.FunctionComponent<Props> = ({ children, className, el = "div", clean = false }) => {
   const rootClassName = cn(className, {
-    "max-w-6xl py-8 pb-16 lg:pb-0 lg:py-16 px-4 lg:px-8 w-full": !clean
+    "max-w-6xl py-8 pb-16 lg:py-16 px-4 lg:px-8 w-full": !clean
   })
 
   const Component: React.ComponentType<React.HTMLAttributes<HTMLElement>> = el as any
