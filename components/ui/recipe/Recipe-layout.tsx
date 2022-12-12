@@ -21,7 +21,7 @@ const RecipeLayout: React.FunctionComponent<RecipeInner> = ({ data, url }) => {
   return (
     <article aria-label="recipe-data" className="block grid-flow-row-dense grid-cols-12 gap-x-16 gap-y-16 lg:grid">
       <div className="col-start-6 col-end-13 mb-8 h-fit lg:mb-0">
-        <h1 className="font-headline text-3xl font-bold lg:text-6xl">{data.name}</h1>
+        <h1 className="font-headline text-3xl font-bold lg:text-5xl">{data.name}</h1>
         <span className="mt-2 flex text-neutral-500">
           from{" "}
           <a href={url} target="_blank" rel="noreferrer" className="flex items-center font-medium hover:underline">
@@ -36,29 +36,6 @@ const RecipeLayout: React.FunctionComponent<RecipeInner> = ({ data, url }) => {
         </dl>
         <p className={(clsx(data.description ? "block" : "hidden"), "mt-4")}>{data.description}</p>
       </div>
-      {/* <section className="col-start-6 col-end-12 mb-8 h-fit lg:mb-0">
-        <h5>
-          <span className="text-red-500">*</span> Nutrition per serving
-        </h5>
-        <div className="scroll mt-4 flex max-w-fit space-x-3 overflow-x-auto">
-          <LayoutNutrients label="Calories" data={data.} />
-          <LayoutNutrients label="Fibers" data={data.nutritions?.fiberContent}>
-            {data.nutritions?.fiberContent && "g"}
-          </LayoutNutrients>
-          <LayoutNutrients label="Proteins" data={data.nutritions?.proteinContent}>
-            {data.nutritions?.proteinContent && "g"}
-          </LayoutNutrients>
-          <LayoutNutrients label="Carbs" data={data.nutritions?.carbohydrateContent}>
-            {data.nutritions?.carbohydrateContent && "g"}
-          </LayoutNutrients>
-          <LayoutNutrients label="Fats" data={data.nutritions?.fatContent}>
-            {data.nutritions?.fatContent && "g"}
-          </LayoutNutrients>
-          <LayoutNutrients label="Sugars" data={data.nutritions?.sugarContent}>
-            {data.nutritions?.fatContent && "g"}
-          </LayoutNutrients>
-        </div>
-      </section> */}
       <div className="relative col-start-1 col-end-6 row-start-1 row-end-auto mx-[calc(1.5rem*-0.65)] lg:mx-0">
         <div className="left-0 top-0 w-full pt-[125%] lg:absolute">
           <picture className="absolute left-0 top-0 h-full w-full">{data?.image && <Image alt={data.name} src={data.image} className="rounded-lg object-cover" fill sizes="1" priority />}</picture>
