@@ -1,18 +1,18 @@
-import type { GetStaticProps } from "next"
+import type { NextPage } from "next"
+import Image from "next/image"
 import { useRouter } from "next/router"
 import React from "react"
-import { FiPlus, FiShare2 } from "react-icons/fi"
 
-import { HomepageHeader } from "@/components/home"
 import HomepageRecipe from "@/components/home/homepage-recipe"
-import type { HomePageProps, QueryParam } from "@/components/home/types"
+import type { QueryParam } from "@/components/home/types"
 import { Container } from "@/components/ui"
 import { Result } from "@/components/ui/recipe/recipe"
+import RecipeHeader from "@/components/ui/recipe/Recipe-header"
+import RecipeImportForm from "@/components/ui/recipe/Recipe-import-form"
 import { server } from "@/config"
 import { isValidHttpUrl } from "@/helpers/isValidHttp"
 
-export default function Home({ stats }: HomePageProps) {
-  console.log(stats)
+export const Home: NextPage = () => {
   const router = useRouter()
   const { url } = router.query as QueryParam
 
@@ -45,7 +45,6 @@ export default function Home({ stats }: HomePageProps) {
     event.preventDefault()
     const query: { url: string } = { url: value }
     if (value.length > 0 && isValidHttpUrl(query.url)) {
-      setRecipeData(undefined)
       router.push({ pathname: "/", query: `url=${decodeURI(query.url)}` })
       fetchRecipe(query.url)
       setValue("")
@@ -57,29 +56,23 @@ export default function Home({ stats }: HomePageProps) {
   React.useEffect(() => {
     if (url) {
       fetchRecipe(url)
+    } else {
+      setRecipeData(undefined)
     }
   }, [url])
 
+  const importProps = { handleSubmitForm, isRequested, setValue, value }
+
   return (
     <section className="flex flex-col">
-      <div className="z-40 flex h-auto w-full flex-col justify-between bg-dark-1 py-6 px-4 lg:h-20 lg:flex-row lg:items-center lg:px-8 lg:py-0">
-        <HomepageHeader handleSubmitForm={handleSubmitForm} isRequested={isRequested} setValue={setValue} value={value} />
-        <div className="ml-auto hidden space-x-4 pt-4 md:flex md:pt-0 lg:ml-0">
-          <button className="flex h-12 items-center space-x-2 rounded-lg px-6 outline outline-1 outline-dark-neutral">
-            <FiShare2 className="h-4 w-4" />
-            <span className="text-sm">Share</span>
-          </button>
-          <button className="flex h-12 items-center space-x-2 rounded-lg bg-[hsl(144,40%,36%)] px-6">
-            <FiPlus className="h-5 w-5" />
-            <span className="text-sm">Save</span>
-          </button>
+      {recipeData && <RecipeHeader {...importProps} />}
+      {!recipeData && !isRequested && (
+        <div className="absolute top-0 mx-auto flex h-screen max-w-xl flex-col justify-center px-4 sm:px-0 lg:relative">
+          <Image src="/poached_logo.png" alt="Poached Logo" width={150} height={150} className="relative mx-auto object-cover" />
+          <p className="mb-6 text-center font-headline text-lg font-bold lg:text-xl">Get just the instructions & ingredients for any recipe. No popups, ads, or annoying clutters</p>
+          <RecipeImportForm {...importProps} wfull />
         </div>
-        <div className="fixed bottom-3 right-3 z-50 flex space-x-4 shadow lg:hidden">
-          <button className="flex h-16 w-16 items-center justify-center space-x-2 rounded-full bg-[hsl(144,40%,36%)] shadow">
-            <FiPlus className="h-8 w-8" />
-          </button>
-        </div>
-      </div>
+      )}
       <Container className="m-auto flex flex-col gap-y-8">
         <HomepageRecipe data={recipeData} isRequested={isRequested} url={url} />
       </Container>
@@ -87,18 +80,20 @@ export default function Home({ stats }: HomePageProps) {
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-  const response = await fetch(process.env.REPO_STATS as string)
-  const stats = await response.json()
+// export const getStaticProps: GetStaticProps = async () => {
+//   const response = await fetch(process.env.REPO_STATS as string)
+//   const stats = await response.json()
 
-  return {
-    props: {
-      stats: {
-        starGazer: stats.stargazers_count,
-        origin: stats.html_url,
-        forkUrl: "https://github.com/arcetros/poached/fork"
-      }
-    },
-    revalidate: 10
-  }
-}
+//   return {
+//     props: {
+//       stats: {
+//         starGazer: stats.stargazers_count,
+//         origin: stats.html_url,
+//         forkUrl: "https://github.com/arcetros/poached/fork"
+//       }
+//     },
+//     revalidate: 10
+//   }
+// }
+
+export default Home

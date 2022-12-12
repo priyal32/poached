@@ -20,7 +20,7 @@ const RecipeLayout: React.FunctionComponent<RecipeInner> = ({ data, url }) => {
 
   return (
     <article aria-label="recipe-data" className="block grid-flow-row-dense grid-cols-12 gap-x-16 gap-y-16 lg:grid">
-      <div className="col-start-6 col-end-13 mt-8 mb-8 h-fit lg:mb-0">
+      <div className="col-start-6 col-end-13 mb-8 h-fit lg:mb-0">
         <h1 className="font-headline text-3xl font-bold lg:text-6xl">{data.name}</h1>
         <span className="mt-2 flex text-neutral-500">
           from{" "}
@@ -59,7 +59,7 @@ const RecipeLayout: React.FunctionComponent<RecipeInner> = ({ data, url }) => {
           </LayoutNutrients>
         </div>
       </section> */}
-      <div className="relative col-start-1 col-end-6 row-start-1 row-end-auto mx-[calc(1.5rem*-0.65)] mt-8 lg:mx-0">
+      <div className="relative col-start-1 col-end-6 row-start-1 row-end-auto mx-[calc(1.5rem*-0.65)] lg:mx-0">
         <div className="left-0 top-0 w-full pt-[125%] lg:absolute">
           <picture className="absolute left-0 top-0 h-full w-full">{data?.image && <Image alt={data.name} src={data.image} className="rounded-lg object-cover" fill sizes="1" priority />}</picture>
         </div>

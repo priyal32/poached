@@ -1,6 +1,7 @@
 import { clearAllBodyScrollLocks, disableBodyScroll } from "body-scroll-lock"
 import React from "react"
 import { BsGear } from "react-icons/bs"
+import { FaGithub } from "react-icons/fa"
 import { FiAlignRight, FiBook, FiCalendar, FiChevronDown, FiGrid, FiInfo, FiMoon, FiSun } from "react-icons/fi"
 
 const Navbar: React.FunctionComponent<{ isOpen: boolean; toggleNavBar: () => void }> = ({ isOpen, toggleNavBar }) => {
@@ -18,14 +19,17 @@ const Navbar: React.FunctionComponent<{ isOpen: boolean; toggleNavBar: () => voi
   }, [isOpen])
 
   return (
-    <nav className="relative z-50 flex h-auto w-full flex-col justify-between overflow-auto bg-dark-1 md:fixed md:h-full md:w-[15rem]">
+    <nav className="relative z-50 flex h-auto w-full flex-col justify-between overflow-auto bg-dark-2 md:fixed md:h-full md:w-[15rem] md:bg-dark-1">
       <div className="flex h-full w-full flex-col md:relative md:w-auto md:justify-between">
         <section>
-          <div className="border-neutral fixed z-50 flex h-20 w-full items-center justify-between border-b border-r border-dark-neutral bg-dark-1 px-5 md:relative md:w-auto">
-            <h1 className="font-headline text-xl font-medium">Poached</h1>
+          <div className="border-neutral fixed z-50 flex h-20 w-full items-center justify-between border-b border-r border-dark-neutral bg-dark-2 px-5 md:relative md:w-auto md:bg-dark-1">
+            <h1 className="hidden font-headline text-xl font-medium md:block">Poached</h1>
             <div onClick={toggleNavBar} className="block rounded border border-neutral-700 p-3 md:hidden">
-              <FiAlignRight />
+              <FiAlignRight className="h-5 w-5" />
             </div>
+            <a href="https://github.com/arcetros/poached" target="_blank" rel="noreferrer" className="hidden rounded-lg bg-dark-neutral p-1 lg:block">
+              <FaGithub className="h-5 w-5" />
+            </a>
           </div>
           <div className="hidden flex-col justify-between py-6 md:flex">
             <h5 className="px-5 text-sm text-neutral-500">MENU</h5>
