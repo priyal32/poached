@@ -1,16 +1,18 @@
-import React from "react"
-import { FiCornerDownLeft, FiSearch } from "react-icons/fi"
+import React from "react";
+import { FieldValues, UseFormRegister } from "react-hook-form";
+import { FiCornerDownLeft, FiSearch } from "react-icons/fi";
 
-import LoadingDots from "../Loading-dots/LoadingDots"
+import LoadingDots from "../Loading-dots/LoadingDots";
 
 type Props = {
-  handleSubmitForm: (event: React.FormEvent) => Promise<void>
-  setValue: (value: React.SetStateAction<string>) => void
-  value?: string
-  isRequested: boolean
-  placeHolder?: string
-  wfull?: boolean
-}
+  handleSubmitForm: (event: React.FormEvent) => Promise<void>;
+  setValue: (value: React.SetStateAction<string>) => void;
+  value?: string;
+  isRequested: boolean;
+  placeHolder?: string;
+  wfull?: boolean;
+  register?: UseFormRegister<FieldValues>;
+};
 
 const RecipeImportForm: React.FunctionComponent<Props> = ({ handleSubmitForm, setValue, value, isRequested, wfull = false, placeHolder = "Paste the URL of a recipe" }) => {
   return (
@@ -36,7 +38,7 @@ const RecipeImportForm: React.FunctionComponent<Props> = ({ handleSubmitForm, se
         <span>{isRequested ? <LoadingDots /> : <FiCornerDownLeft className="h-5 w-5" />}</span>
       </button>
     </form>
-  )
-}
+  );
+};
 
-export default RecipeImportForm
+export default RecipeImportForm;
