@@ -17,9 +17,10 @@ type Props = {
   setRecipe: React.Dispatch<React.SetStateAction<RootSchema | undefined>>;
   recipeData: Result | undefined;
   form: UseFormReturn<RootSchema, any>;
+  handleCloseEdit: () => void;
 };
 
-const RecipeEditForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData }) => {
+const RecipeEditForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, handleCloseEdit }) => {
   const initialEdit = {
     description: recipe?.description ? (recipe?.description ? true : false) : false,
     ingredients: false,
@@ -51,18 +52,18 @@ const RecipeEditForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData }
     });
   }
 
+  function handleSubmit(data: RootSchema) {
+    setRecipe(data);
+    form.reset(data);
+    handleCloseEdit();
+  }
+
   React.useEffect(() => {
     setOnEditFields(initialEdit);
   }, [recipeData]);
 
   return (
-    <form
-      onSubmit={form.handleSubmit((data) => {
-        setRecipe(data);
-        form.reset(data);
-      })}
-      className="flex h-full flex-col justify-between"
-    >
+    <form onSubmit={form.handleSubmit((data) => handleSubmit(data))} className="flex h-full flex-col justify-between">
       <div className="flex flex-col px-4 pb-8">
         <div className="border-b border-b-dark-neutral">
           <h1 className="mb-2 pb-2 font-headline text-2xl font-bold">Edit recipe</h1>

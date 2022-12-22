@@ -83,7 +83,7 @@ export const Home: NextPage = () => {
       {recipe && onEdit && (
         <Sidebar onClose={handleCloseEdit}>
           <SidebarLayout handleClose={handleCloseEdit}>
-            <RecipeEditForm form={form} recipe={recipe} setRecipe={setRecipe} recipeData={recipeData} />
+            <RecipeEditForm handleCloseEdit={handleCloseEdit} form={form} recipe={recipe} setRecipe={setRecipe} recipeData={recipeData} />
           </SidebarLayout>
         </Sidebar>
       )}
