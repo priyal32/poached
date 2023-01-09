@@ -14,10 +14,15 @@ type Props = {
     [key: string]: boolean;
   };
   getValues: UseFormGetValues<RootSchema>;
+  handleSubmit(data: RootSchema): void;
 };
 
-const ArrayInstructions: React.FunctionComponent<Props> = ({ instructionsRef, control, setValue, onEdit, getValues }) => {
-  const { fields, append, remove } = useRecipeFields({ control, fieldRef: instructionsRef, getValues, setValue, targetKey: "recipeInstructions", onEdit: onEdit.instructions });
+const ArrayInstructions: React.FunctionComponent<Props> = ({ instructionsRef, control, setValue, onEdit, getValues, handleSubmit }) => {
+  const { fields, append, remove, removeLastEmptyField } = useRecipeFields({ control, fieldRef: instructionsRef, getValues, setValue, targetKey: "recipeInstructions", onEdit: onEdit.instructions });
+
+  React.useEffect(() => {
+    removeLastEmptyField();
+  }, [handleSubmit]);
 
   return (
     <FieldWrapper el="ul" aria-label="Ingredients">
@@ -33,10 +38,14 @@ const ArrayInstructions: React.FunctionComponent<Props> = ({ instructionsRef, co
             });
           }}
           onKeyDown={(event) => {
-            if (event.code === "Enter") {
-              event.preventDefault();
+            const textContent = event.currentTarget.textContent as string;
+            if (event.code === "Enter" && textContent.length > 0) {
               append(event);
             }
+            if (event.code === "Enter" && textContent.length === 0) {
+              remove(id);
+            }
+
             if (event.code === "Backspace" && event.currentTarget.textContent === "") {
               remove(id);
             }

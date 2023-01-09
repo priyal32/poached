@@ -34,6 +34,12 @@ const useRecipeFields = ({ control, targetKey, onEdit, fieldRef, getValues }: Pr
     }
   }, [fields, onEdit]);
 
+  function removeLastEmptyField() {
+    if (fields[fields.length - 1]?.item.length === 0) {
+      remove(fields.length - 1);
+    }
+  }
+
   function appendNewField(event: React.KeyboardEvent | React.MouseEvent) {
     event.preventDefault();
     append({
@@ -46,7 +52,7 @@ const useRecipeFields = ({ control, targetKey, onEdit, fieldRef, getValues }: Pr
     remove(id);
   }
 
-  return { fields, append: appendNewField, remove: removeField };
+  return { fields, append: appendNewField, remove: removeField, removeLastEmptyField };
 };
 
 export default useRecipeFields;

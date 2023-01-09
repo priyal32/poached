@@ -1,26 +1,27 @@
-import clsx from "clsx"
-import extractDomain from "extract-domain"
-import Image from "next/image"
-import React from "react"
-import { FiLink } from "react-icons/fi"
+import clsx from "clsx";
+import extractDomain from "extract-domain";
+import Image from "next/image";
+import React from "react";
+import { FiLink } from "react-icons/fi";
 
-import { RootSchema } from "@/types"
+import { RootSchema } from "@/types";
 
-import LayoutDuration from "./layouts/Layout-duration"
-// import LayoutNutrients from "./layouts/Layout-nutrients"
+import LayoutDuration from "./layouts/Layout-duration";
 
 type RecipeInner = {
-  data: RootSchema
-}
+  data: RootSchema;
+};
 
 const RecipeLayout: React.FunctionComponent<RecipeInner> = ({ data }) => {
-  const uniqueIngredient = Array.from(new Set(data.recipeIngredients))
-  const extractedDomain = data.url && extractDomain(data.url)
+  const uniqueIngredient = Array.from(new Set(data.recipeIngredients)).filter((ingredient) => ingredient.item.length > 0);
+  const extractedDomain = data.url && extractDomain(data.url);
 
   return (
     <article aria-label="recipe-data" className="block grid-flow-row-dense grid-cols-12 gap-x-16 gap-y-16 lg:grid">
       <div className="col-start-6 col-end-13 mb-8 h-fit lg:mb-0">
-        <h1 className="font-headline text-3xl font-bold lg:text-5xl">{data.name}</h1>
+        <h1 className="font-headline text-3xl font-bold lg:text-5xl" onClick={() => console.log(data.recipeInstructions)}>
+          {data.name}
+        </h1>
         <span className="mt-2 flex text-neutral-500">
           from{" "}
           <a href={data.url} target="_blank" rel="noreferrer" className="flex items-center font-medium hover:underline">
@@ -57,7 +58,7 @@ const RecipeLayout: React.FunctionComponent<RecipeInner> = ({ data }) => {
                 <li className="flex py-4 first:pt-2" key={item.id}>
                   <label className="flex items-center">{item.item}</label>
                 </li>
-              )
+              );
             })}
           </ul>
         </section>
@@ -79,12 +80,12 @@ const RecipeLayout: React.FunctionComponent<RecipeInner> = ({ data }) => {
                   </div>
                   <p className="ml-4">{item.item}</p>
                 </li>
-              )
+              );
             })}
         </ol>
       </div>
     </article>
-  )
-}
+  );
+};
 
-export default RecipeLayout
+export default RecipeLayout;

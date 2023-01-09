@@ -53,7 +53,9 @@ const RecipeEditForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, 
   }
 
   function handleSubmit(data: RootSchema) {
-    setRecipe(data);
+    const sanitizedIngredients = data.recipeIngredients.filter((o) => o.item !== "");
+    const sanitizedInstructions = data.recipeInstructions?.filter((o) => o.item !== "");
+    setRecipe({ ...data, recipeIngredients: sanitizedIngredients, recipeInstructions: sanitizedInstructions });
     form.reset(data);
     handleCloseEdit();
   }
@@ -77,11 +79,13 @@ const RecipeEditForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, 
           <Input {...register("recipeYield")} type="number" placeholder="Recipe yields" />
         </FieldWrapper>
         <EditButton handleEditToggle={handleEditToggle} targetKey="ingredients" />
-        {onEditFields.ingredients && <ArrayIngredients control={control} ingredientRef={ingredientRef} setValue={setValue} getValues={getValues} onEdit={onEditFields} />}
+        {onEditFields.ingredients && <ArrayIngredients handleSubmit={handleSubmit} control={control} ingredientRef={ingredientRef} setValue={setValue} getValues={getValues} onEdit={onEditFields} />}
         {recipe?.recipeInstructions && (
           <>
             <EditButton handleEditToggle={handleEditToggle} targetKey="instructions" />
-            {onEditFields.instructions && <ArrayInstructions control={control} instructionsRef={instructionsRef} setValue={setValue} getValues={getValues} onEdit={onEditFields} />}
+            {onEditFields.instructions && (
+              <ArrayInstructions handleSubmit={handleSubmit} control={control} instructionsRef={instructionsRef} setValue={setValue} getValues={getValues} onEdit={onEditFields} />
+            )}
           </>
         )}
       </div>
