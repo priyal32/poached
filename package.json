@@ -23,7 +23,7 @@
     "jsonschema": "^1.4.1",
     "lodash": "^4.17.21",
     "next": "13.0.6",
-    "next-router-mock": "^0.7.4",
+    "next-router-mock": "^0.8.0",
     "node-fetch": "^3.3.0",
     "parse-domain": "^7.0.1",
     "react": "18.2.0",
