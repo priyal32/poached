@@ -2,6 +2,7 @@ import React from "react";
 import { Control, useFieldArray, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { BsClock } from "react-icons/bs";
 
+import interpretDuration from "@/helpers/interpretDuration";
 import { RootSchema } from "@/types";
 
 import FieldWrapper from "./FieldWrapper";
@@ -19,7 +20,7 @@ const ArrayCooktimes: React.FunctionComponent<Props> = ({ control, recipe, regis
     name: "cookTimes",
   });
 
-  const defaultFromImport = [recipe?.prepTime, recipe?.totalTime, recipe?.cookTime];
+  const defaultFromImport = [interpretDuration(recipe?.prepTime).toMinutes(), recipe?.totalTime, recipe?.cookTime];
 
   // item?.match(/\d+/g)
 
@@ -28,6 +29,8 @@ const ArrayCooktimes: React.FunctionComponent<Props> = ({ control, recipe, regis
   //     append({})
   //   }).flat();
   // }, [recipe])
+
+  console.log(defaultFromImport);
 
   return (
     <FieldWrapper el="ul">
