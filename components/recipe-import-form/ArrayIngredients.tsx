@@ -18,7 +18,14 @@ type Props = {
 };
 
 const ArrayIngredients: React.FunctionComponent<Props> = ({ ingredientRef, control, setValue, onEdit, getValues, handleSubmit }) => {
-  const { fields, append, remove, removeLastEmptyField } = useRecipeFields({ control, fieldRef: ingredientRef, getValues, setValue, targetKey: "recipeIngredients", onEdit: onEdit.ingredients });
+  const { fields, append, removeLastEmptyField, handleOnEnter } = useRecipeFields({
+    control,
+    fieldRef: ingredientRef,
+    getValues,
+    setValue,
+    targetKey: "recipeIngredients",
+    onEdit: onEdit.ingredients,
+  });
 
   React.useEffect(() => {
     removeLastEmptyField();
@@ -30,20 +37,7 @@ const ArrayIngredients: React.FunctionComponent<Props> = ({ ingredientRef, contr
         <li
           suppressContentEditableWarning
           ref={(val) => (ingredientRef.current[id] = val)}
-          onKeyDown={(event) => {
-            const textContent = event.currentTarget.textContent as string;
-            if (event.code === "Enter" && textContent.length > 0) {
-              append(event);
-            }
-
-            if (event.code === "Enter" && textContent.length === 0) {
-              remove(id);
-            }
-
-            if (event.code === "Backspace" && textContent === "") {
-              remove(id);
-            }
-          }}
+          onKeyDown={(event) => handleOnEnter(event, id)}
           contentEditable
           onInput={(event) => {
             setValue(`recipeIngredients.${id}`, {

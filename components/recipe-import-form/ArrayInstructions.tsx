@@ -18,7 +18,14 @@ type Props = {
 };
 
 const ArrayInstructions: React.FunctionComponent<Props> = ({ instructionsRef, control, setValue, onEdit, getValues, handleSubmit }) => {
-  const { fields, append, remove, removeLastEmptyField } = useRecipeFields({ control, fieldRef: instructionsRef, getValues, setValue, targetKey: "recipeInstructions", onEdit: onEdit.instructions });
+  const { fields, append, removeLastEmptyField, handleOnEnter } = useRecipeFields({
+    control,
+    fieldRef: instructionsRef,
+    getValues,
+    setValue,
+    targetKey: "recipeInstructions",
+    onEdit: onEdit.instructions,
+  });
 
   React.useEffect(() => {
     removeLastEmptyField();
@@ -37,19 +44,7 @@ const ArrayInstructions: React.FunctionComponent<Props> = ({ instructionsRef, co
               item: event.currentTarget.textContent as string,
             });
           }}
-          onKeyDown={(event) => {
-            const textContent = event.currentTarget.textContent as string;
-            if (event.code === "Enter" && textContent.length > 0) {
-              append(event);
-            }
-            if (event.code === "Enter" && textContent.length === 0) {
-              remove(id);
-            }
-
-            if (event.code === "Backspace" && event.currentTarget.textContent === "") {
-              remove(id);
-            }
-          }}
+          onKeyDown={(event) => handleOnEnter(event, id)}
           key={instruction.id}
           className="rounded-md bg-transparent p-2 text-sm focus:outline-none"
         >

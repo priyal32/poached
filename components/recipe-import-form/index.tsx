@@ -78,6 +78,11 @@ const RecipeEditForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, 
         <FieldWrapper aria-label="Yields">
           <Input {...register("recipeYield")} type="number" placeholder="Recipe yields" />
         </FieldWrapper>
+        <FieldWrapper>
+          <button type="button" className="mt-4 flex items-center justify-center space-x-2 rounded-lg bg-dark-2 p-3 transition-all hover:bg-dark-neutral">
+            Add cooking time
+          </button>
+        </FieldWrapper>
         <EditButton handleEditToggle={handleEditToggle} targetKey="ingredients" />
         {onEditFields.ingredients && <ArrayIngredients handleSubmit={handleSubmit} control={control} ingredientRef={ingredientRef} setValue={setValue} getValues={getValues} onEdit={onEditFields} />}
         {recipe?.recipeInstructions && (

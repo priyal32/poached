@@ -40,6 +40,21 @@ const useRecipeFields = ({ control, targetKey, onEdit, fieldRef, getValues }: Pr
     }
   }
 
+  function handleOnEnter(event: React.KeyboardEvent, id: number) {
+    const textContent = event.currentTarget.textContent as string;
+    event.preventDefault();
+    if (event.code === "Enter" && textContent.length > 0) {
+      appendNewField(event);
+    }
+    if (event.code === "Enter" && textContent.length === 0) {
+      remove(id);
+    }
+
+    if (event.code === "Backspace" && event.currentTarget.textContent === "") {
+      remove(id);
+    }
+  }
+
   function appendNewField(event: React.KeyboardEvent | React.MouseEvent) {
     event.preventDefault();
     append({
@@ -52,7 +67,7 @@ const useRecipeFields = ({ control, targetKey, onEdit, fieldRef, getValues }: Pr
     remove(id);
   }
 
-  return { fields, append: appendNewField, remove: removeField, removeLastEmptyField };
+  return { fields, append: appendNewField, remove: removeField, removeLastEmptyField, handleOnEnter };
 };
 
 export default useRecipeFields;
