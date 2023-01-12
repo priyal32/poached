@@ -5,15 +5,15 @@ import { RootSchema } from "@/types";
 
 type Props = {
   control: Control<RootSchema, any>;
-  targetKey: "recipeInstructions" | "recipeIngredients" | "cookTimes";
-  onEdit: boolean;
+  targetKey: "recipeInstructions" | "recipeIngredients";
+  onEdit?: boolean;
   fieldRef: React.MutableRefObject<(HTMLElement | null)[]>;
   getValues: UseFormGetValues<RootSchema>;
   setValue: UseFormSetValue<RootSchema>;
 };
 
 const useRecipeFields = ({ control, targetKey, onEdit, fieldRef, getValues }: Props) => {
-  const { fields, append, remove } = useFieldArray<RootSchema>({
+  const { fields, append, remove } = useFieldArray({
     control,
     name: targetKey,
   });
@@ -35,7 +35,7 @@ const useRecipeFields = ({ control, targetKey, onEdit, fieldRef, getValues }: Pr
   }, [fields, onEdit]);
 
   function removeLastEmptyField() {
-    if (targetKey !== "cookTimes" && fields[fields.length - 1]?.item.length === 0) {
+    if (fields[fields.length - 1]?.item.length === 0) {
       remove(fields.length - 1);
     }
   }
@@ -56,12 +56,10 @@ const useRecipeFields = ({ control, targetKey, onEdit, fieldRef, getValues }: Pr
 
   function appendNewField(event: React.KeyboardEvent | React.MouseEvent) {
     event.preventDefault();
-    if (targetKey !== "cookTimes") {
-      append({
-        item: "",
-        id: fields.length,
-      });
-    }
+    append({
+      item: "",
+      id: fields.length,
+    });
   }
 
   function removeField(id: number) {

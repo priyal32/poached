@@ -14,7 +14,7 @@ export type RootSchema = {
   recipeYield?: number | string;
   recipeIngredients: { item: string; id: number }[];
   recipeInstructions?: { item: string; id: number }[];
-  cookTimes?: { [key: string]: string }[];
+  cookTimes?: { hr: string; min: string; type: string }[];
   recipeCategories?: string[];
   recipeCuisines?: string[];
   recipeTypes?: string[];

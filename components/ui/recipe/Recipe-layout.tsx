@@ -19,7 +19,7 @@ const RecipeLayout: React.FunctionComponent<RecipeInner> = ({ data }) => {
   return (
     <article aria-label="recipe-data" className="block grid-flow-row-dense grid-cols-12 gap-x-16 gap-y-16 lg:grid">
       <div className="col-start-6 col-end-13 mb-8 h-fit lg:mb-0">
-        <h1 className="font-headline text-3xl font-bold lg:text-5xl" onClick={() => console.log(data.recipeInstructions)}>
+        <h1 className="font-headline text-3xl font-bold lg:text-5xl" onClick={() => console.log(data)}>
           {data.name}
         </h1>
         <span className="mt-2 flex text-neutral-500">

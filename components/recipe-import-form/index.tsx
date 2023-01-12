@@ -1,11 +1,11 @@
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
-import { BsClock } from "react-icons/bs";
 
 import { RootSchema } from "@/types";
 
 import Input from "../ui/Form/Input";
 import { Result } from "../ui/recipe/recipe";
+import ArrayCooktimes from "./ArrayCooktimes";
 import ArrayIngredients from "./ArrayIngredients";
 import ArrayInstructions from "./ArrayInstructions";
 import Description from "./Description";
@@ -73,11 +73,7 @@ const RecipeEditForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, 
         </div>
         <Title register={register} onEditFields={onEditFields} name="name" handleDescriptionToggle={handleDescriptionToggle} />
         {onEditFields.description && <Description register={register} />}
-        <FieldWrapper>
-          <button type="button" className="flex items-center justify-center space-x-2 rounded-lg bg-dark-2 p-3 transition-all hover:bg-dark-neutral">
-            <BsClock className="h-4 w-4" /> <span className="text-sm capitalize">Add cooking time</span>
-          </button>
-        </FieldWrapper>
+        <ArrayCooktimes control={control} setValue={setValue} recipe={recipe} register={register} />
         <FieldWrapper aria-label="Url">
           <Input {...register("url")} placeholder="Recipe url source" />
         </FieldWrapper>
