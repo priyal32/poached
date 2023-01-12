@@ -3,6 +3,7 @@ import { Control, useFieldArray, UseFormRegister, UseFormSetValue } from "react-
 import { BsClock } from "react-icons/bs";
 
 import interpretDuration from "@/helpers/interpretDuration";
+import { formatMilliseconds } from "@/helpers/msFormatter";
 import { RootSchema } from "@/types";
 
 import FieldWrapper from "./FieldWrapper";
@@ -20,9 +21,11 @@ const ArrayCooktimes: React.FunctionComponent<Props> = ({ control, recipe, regis
     name: "cookTimes",
   });
 
-  const defaultFromImport = [interpretDuration(recipe?.prepTime).toMinutes(), recipe?.totalTime, recipe?.cookTime];
+  const defaultFromImport = [formatMilliseconds(interpretDuration("199 minutes").toMilliseconds(), { units: "long" }), recipe?.totalTime, recipe?.cookTime];
 
   // item?.match(/\d+/g)
+
+  // https://www.npmjs.com/package/humanize-duration
 
   // React.useEffect(() => {
   //   defaultFromImport.map((item) => {
