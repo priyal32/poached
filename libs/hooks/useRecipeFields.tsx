@@ -42,7 +42,6 @@ const useRecipeFields = ({ control, targetKey, onEdit, fieldRef, getValues }: Pr
 
   function handleOnEnter(event: React.KeyboardEvent, id: number) {
     const textContent = event.currentTarget.textContent as string;
-    event.preventDefault();
     if (event.code === "Enter" && textContent.length > 0) {
       appendNewField(event);
     }
