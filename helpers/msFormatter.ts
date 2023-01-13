@@ -77,4 +77,4 @@ const formatMilliseconds = (ms: number, { units = "short", ignore = [], largestO
   return parts.join(" ");
 };
 
-export { formatMilliseconds };
+export { formatMilliseconds, parseMilliseconds };

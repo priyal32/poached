@@ -2,8 +2,6 @@ import React from "react";
 import { Control, useFieldArray, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { BsClock } from "react-icons/bs";
 
-import interpretDuration from "@/helpers/interpretDuration";
-import { formatMilliseconds } from "@/helpers/msFormatter";
 import { RootSchema } from "@/types";
 
 import FieldWrapper from "./FieldWrapper";
@@ -12,28 +10,15 @@ type Props = {
   control: Control<RootSchema, any>;
   setValue: UseFormSetValue<RootSchema>;
   register: UseFormRegister<RootSchema>;
-  recipe: RootSchema | undefined;
 };
 
-const ArrayCooktimes: React.FunctionComponent<Props> = ({ control, recipe, register }) => {
+const ArrayCooktimes: React.FunctionComponent<Props> = ({ control, register }) => {
   const { fields, append } = useFieldArray({
     control,
     name: "cookTimes",
   });
 
-  const defaultFromImport = [formatMilliseconds(interpretDuration("199 minutes").toMilliseconds(), { units: "long" }), recipe?.totalTime, recipe?.cookTime];
-
-  // item?.match(/\d+/g)
-
-  // https://www.npmjs.com/package/humanize-duration
-
-  // React.useEffect(() => {
-  //   defaultFromImport.map((item) => {
-  //     append({})
-  //   }).flat();
-  // }, [recipe])
-
-  console.log(defaultFromImport);
+  console.log(fields);
 
   return (
     <FieldWrapper el="ul">
@@ -47,7 +32,11 @@ const ArrayCooktimes: React.FunctionComponent<Props> = ({ control, recipe, regis
         </button>
       )}
       {fields.map((instruction, id) => (
-        <input {...register(`cookTimes.${id}.type`)} type="text" key={instruction.id} className="rounded-md bg-transparent p-2 text-sm focus:outline-none" />
+        <div className="flex" key={id}>
+          <input {...register(`cookTimes.${id}.type`)} type="text" className="rounded-md bg-transparent p-2 text-sm focus:outline-none" />
+          <input {...register(`cookTimes.${id}.min`)} type="text" className="rounded-md bg-transparent p-2 text-sm focus:outline-none" />
+          <input {...register(`cookTimes.${id}.hr`)} type="text" className="rounded-md bg-transparent p-2 text-sm focus:outline-none" />
+        </div>
       ))}
     </FieldWrapper>
   );

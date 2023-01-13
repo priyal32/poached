@@ -15,6 +15,7 @@ import RecipeImportForm from "@/components/ui/recipe/Recipe-import-form";
 import Sidebar from "@/components/ui/Sidebar/Sidebar";
 import SidebarLayout from "@/components/ui/Sidebar/SidebarLayout";
 import { isValidHttpUrl } from "@/helpers/isValidHttp";
+import { parseMilliseconds } from "@/helpers/msFormatter";
 import { RootSchema } from "@/types";
 
 export const Home: NextPage = () => {
@@ -46,7 +47,12 @@ export const Home: NextPage = () => {
     const recipe: Result = await response.json();
     setValue("");
     setRecipe(recipe.results);
-    form.reset(recipe.results);
+
+    const parsedCookTimes = recipe.results?.convertedCookTimes?.map((time) => {
+      return { type: time.type, hr: parseMilliseconds(time.value).hours.toString(), min: parseMilliseconds(time.value).minutes.toString() };
+    });
+
+    form.reset({ ...recipe.results, cookTimes: parsedCookTimes });
     return recipe;
   }
 

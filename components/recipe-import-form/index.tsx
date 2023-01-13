@@ -73,7 +73,7 @@ const RecipeEditForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, 
         </div>
         <Title register={register} onEditFields={onEditFields} name="name" handleDescriptionToggle={handleDescriptionToggle} />
         {onEditFields.description && <Description register={register} />}
-        <ArrayCooktimes control={control} setValue={setValue} recipe={recipe} register={register} />
+        <ArrayCooktimes control={control} setValue={setValue} register={register} />
         <FieldWrapper aria-label="Url">
           <Input {...register("url")} placeholder="Recipe url source" />
         </FieldWrapper>
