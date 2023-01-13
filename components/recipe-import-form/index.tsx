@@ -1,6 +1,8 @@
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
 
+import interpretDuration from "@/helpers/interpretDuration";
+import { formatMilliseconds, parseMilliseconds } from "@/helpers/msFormatter";
 import { RootSchema } from "@/types";
 
 import Input from "../ui/Form/Input";
@@ -53,11 +55,23 @@ const RecipeEditForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, 
     });
   }
 
+  function handleMiliseconds(str: string) {
+    return Number(interpretDuration(str).toMilliseconds());
+  }
+
   function handleSubmit(data: RootSchema) {
     const sanitizedIngredients = data.recipeIngredients.filter((o) => o.item !== "");
     const sanitizedInstructions = data.recipeInstructions?.filter((o) => o.item !== "");
-    setRecipe({ ...data, recipeIngredients: sanitizedIngredients, recipeInstructions: sanitizedInstructions });
-    form.reset(data);
+    const convertCookTimes = data?.cookTimes?.map((time) => {
+      return { type: time.type, value: handleMiliseconds(`${time.hr} hour`) + handleMiliseconds(`${time.min} minute`) };
+    });
+    const normalizeParsedCookTimes = convertCookTimes?.map((time) => {
+      return { type: time.type, hr: parseMilliseconds(time.value).hours.toString(), min: parseMilliseconds(time.value).minutes.toString() };
+    });
+
+    const newData = { ...data, recipeIngredients: sanitizedIngredients, recipeInstructions: sanitizedInstructions, convertedCookTimes: convertCookTimes, cookTimes: normalizeParsedCookTimes };
+    setRecipe(newData);
+    form.reset(newData);
     handleCloseEdit();
   }
 
