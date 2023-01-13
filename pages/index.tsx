@@ -46,11 +46,11 @@ export const Home: NextPage = () => {
 
     const recipe: Result = await response.json();
     setValue("");
-    setRecipe(recipe.results);
-
     const parsedCookTimes = recipe.results?.convertedCookTimes?.map((time) => {
       return { type: time.type, hr: parseMilliseconds(time.value).hours.toString(), min: parseMilliseconds(time.value).minutes.toString() };
     });
+
+    setRecipe({ ...recipe.results, cookTimes: parsedCookTimes });
 
     form.reset({ ...recipe.results, cookTimes: parsedCookTimes });
     return recipe;

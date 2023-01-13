@@ -4,6 +4,8 @@ import Image from "next/image";
 import React from "react";
 import { FiLink } from "react-icons/fi";
 
+import interpretDuration from "@/helpers/interpretDuration";
+import { formatMilliseconds } from "@/helpers/msFormatter";
 import { RootSchema } from "@/types";
 
 import LayoutDuration from "./layouts/Layout-duration";
@@ -15,6 +17,13 @@ type RecipeInner = {
 const RecipeLayout: React.FunctionComponent<RecipeInner> = ({ data }) => {
   const uniqueIngredient = Array.from(new Set(data.recipeIngredients)).filter((ingredient) => ingredient.item.length > 0);
   const extractedDomain = data.url && extractDomain(data.url);
+
+  function handleToMiliseconds(hr: string, min: string) {
+    const hours = Number(interpretDuration(hr).toMilliseconds());
+    const minutes = Number(interpretDuration(min).toMilliseconds());
+
+    return minutes + hours;
+  }
 
   return (
     <article aria-label="recipe-data" className="block grid-flow-row-dense grid-cols-12 gap-x-16 gap-y-16 lg:grid">
@@ -29,10 +38,14 @@ const RecipeLayout: React.FunctionComponent<RecipeInner> = ({ data }) => {
             <FiLink className="mx-1 h-4 w-4" />
           </a>
         </span>
-        <dl className="mt-8 flex items-center space-x-4">
-          <LayoutDuration label="Total" data={data.totalTime} />
-          <LayoutDuration label="Cook" data={data.cookTime} />
-          <LayoutDuration label="Prep" data={data.prepTime} />
+        <dl className="mt-8 flex items-center divide-x divide-neutral-500">
+          {data.cookTimes?.map((time) => {
+            const hour = `${time.hr} hour`;
+            const minute = `${time.min} minute`;
+            const formatedTime = formatMilliseconds(handleToMiliseconds(hour, minute), { units: "long" });
+
+            return <LayoutDuration key={time.type} label={time.type} data={formatedTime} />;
+          })}
         </dl>
         <p className={(clsx(data.description ? "block" : "hidden"), "mt-4")}>{data.description}</p>
       </div>

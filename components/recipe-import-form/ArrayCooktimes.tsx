@@ -18,8 +18,6 @@ const ArrayCooktimes: React.FunctionComponent<Props> = ({ control, register }) =
     name: "cookTimes",
   });
 
-  console.log(fields);
-
   return (
     <FieldWrapper el="ul">
       {fields.length !== 3 && (
@@ -31,7 +29,7 @@ const ArrayCooktimes: React.FunctionComponent<Props> = ({ control, register }) =
           <BsClock className="h-4 w-4" /> <span className="text-sm capitalize">Add cooking time</span>
         </button>
       )}
-      {fields.map((instruction, id) => (
+      {fields.map((_, id) => (
         <div className="flex" key={id}>
           <input {...register(`cookTimes.${id}.type`)} type="text" className="rounded-md bg-transparent p-2 text-sm focus:outline-none" />
           <input {...register(`cookTimes.${id}.min`)} type="text" className="rounded-md bg-transparent p-2 text-sm focus:outline-none" />
