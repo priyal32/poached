@@ -2,7 +2,7 @@ import React from "react";
 import { UseFormReturn } from "react-hook-form";
 
 import interpretDuration from "@/helpers/interpretDuration";
-import { formatMilliseconds, parseMilliseconds } from "@/helpers/msFormatter";
+import { parseMilliseconds } from "@/helpers/msFormatter";
 import { RootSchema } from "@/types";
 
 import Input from "../ui/Form/Input";
@@ -87,13 +87,6 @@ const RecipeEditForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, 
         </div>
         <Title register={register} onEditFields={onEditFields} name="name" handleDescriptionToggle={handleDescriptionToggle} />
         {onEditFields.description && <Description register={register} />}
-        <ArrayCooktimes control={control} setValue={setValue} register={register} />
-        <FieldWrapper aria-label="Url">
-          <Input {...register("url")} placeholder="Recipe url source" />
-        </FieldWrapper>
-        <FieldWrapper aria-label="Yields">
-          <Input {...register("recipeYield")} type="number" placeholder="Recipe yields" />
-        </FieldWrapper>
         <EditButton handleEditToggle={handleEditToggle} targetKey="ingredients" />
         {onEditFields.ingredients && <ArrayIngredients handleSubmit={handleSubmit} control={control} ingredientRef={ingredientRef} setValue={setValue} getValues={getValues} onEdit={onEditFields} />}
         {recipe?.recipeInstructions && (
@@ -104,6 +97,13 @@ const RecipeEditForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, 
             )}
           </>
         )}
+        <ArrayCooktimes control={control} setValue={setValue} register={register} />
+        <FieldWrapper aria-label="Url">
+          <Input {...register("url")} placeholder="Recipe url source" />
+        </FieldWrapper>
+        <FieldWrapper aria-label="Yields">
+          <Input {...register("recipeYield")} type="number" placeholder="Recipe yields" />
+        </FieldWrapper>
       </div>
       <div className="p-4">
         <button type="submit" className="flex w-full items-center justify-center rounded-lg bg-[hsl(144,40%,36%)] px-4 py-3 text-lg font-bold transition-all hover:bg-[hsl(144,40%,29%)]">
