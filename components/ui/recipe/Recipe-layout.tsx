@@ -38,7 +38,7 @@ const RecipeLayout: React.FunctionComponent<RecipeInner> = ({ data }) => {
             <FiLink className="mx-1 h-4 w-4" />
           </a>
         </span>
-        <dl className="mt-8 flex items-center gap-x-3">
+        <dl className="mt-8 flex items-center gap-x-3 border-b border-b-neutral-800 pb-12">
           {data.cookTimes?.map((time) => {
             const hour = `${time.hr} hour`;
             const minute = `${time.min} minute`;
@@ -47,7 +47,7 @@ const RecipeLayout: React.FunctionComponent<RecipeInner> = ({ data }) => {
             return <LayoutDuration key={time.type} label={time.type} data={formatedTime} />;
           })}
         </dl>
-        <p className={(clsx(data.description ? "block" : "hidden"), "mt-8 md:mt-14")}>{data.description}</p>
+        <p className={(clsx(data.description ? "block" : "hidden"), "mt-8 md:mt-12")}>{data.description}</p>
       </div>
       <div className="relative col-start-1 col-end-6 row-start-1 row-end-auto mx-[calc(1.5rem*-0.65)] lg:mx-0">
         <div className="left-0 top-0 w-full pt-[125%] lg:absolute">

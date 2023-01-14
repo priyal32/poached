@@ -10,7 +10,7 @@ const FieldWrapper: React.FunctionComponent<Props> = ({ children, el = "div", ..
   const Component: React.ComponentType<React.HTMLAttributes<HTMLElement>> = el as any;
   return (
     <Component className={clsx("mt-4 flex flex-col", rest.className)}>
-      <label className="mb-1 font-primary text-sm text-neutral-400">{rest["aria-label"]}</label>
+      {rest["aria-label"] && <label className="mb-1 font-primary text-sm text-neutral-400">{rest["aria-label"]}</label>}
       {children}
     </Component>
   );
