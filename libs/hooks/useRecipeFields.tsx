@@ -6,14 +6,14 @@ import { RootSchema } from "@/types";
 type Props = {
   control: Control<RootSchema, any>;
   targetKey: "recipeInstructions" | "recipeIngredients";
-  onEdit: boolean;
+  onEdit?: boolean;
   fieldRef: React.MutableRefObject<(HTMLElement | null)[]>;
   getValues: UseFormGetValues<RootSchema>;
   setValue: UseFormSetValue<RootSchema>;
 };
 
 const useRecipeFields = ({ control, targetKey, onEdit, fieldRef, getValues }: Props) => {
-  const { fields, append, remove } = useFieldArray<RootSchema>({
+  const { fields, append, remove } = useFieldArray({
     control,
     name: targetKey,
   });

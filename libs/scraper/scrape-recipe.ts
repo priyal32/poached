@@ -1,6 +1,8 @@
 import extractDomain from "extract-domain";
 import getRecipeData from "scrape-recipe-schema";
 
+import interpretDuration from "@/helpers/interpretDuration";
+
 import { allrecipes, eatingwell } from "./alternative-scrapers";
 
 interface Domains {
@@ -14,6 +16,15 @@ const domains: Domains = {
 
 function isDomainSupported(domain: string) {
   return Object.keys(domains).find((d) => d === domain) !== undefined;
+}
+
+function convertDuration(str: string) {
+  if (!str) return;
+  const duration = interpretDuration(str).toMilliseconds();
+  if (typeof duration !== "number") {
+    return undefined;
+  }
+  return duration;
 }
 
 export async function scrapeRecipe(url: string) {
@@ -39,7 +50,13 @@ export async function scrapeRecipe(url: string) {
           return { id: id, item: instruction };
         });
 
-        return { ...recipe.data, recipeIngredients: newIngredients, recipeInstructions: newInstructions, url };
+        const convertedCookTimes = [
+          { type: "cookTime", value: convertDuration(recipeData.cookTime) },
+          { type: "prepTime", value: convertDuration(recipeData.prepTime) },
+          { type: "totalTime", value: convertDuration(recipeData.totalTime) },
+        ];
+
+        return { ...recipe.data, recipeIngredients: newIngredients, recipeInstructions: newInstructions, url, convertedCookTimes };
       }
       throw new Error(recipe.message);
     }

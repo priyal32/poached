@@ -1,10 +1,13 @@
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
 
+import interpretDuration from "@/helpers/interpretDuration";
+import { parseMilliseconds } from "@/helpers/msFormatter";
 import { RootSchema } from "@/types";
 
 import Input from "../ui/Form/Input";
 import { Result } from "../ui/recipe/recipe";
+import ArrayCooktimes from "./ArrayCooktimes";
 import ArrayIngredients from "./ArrayIngredients";
 import ArrayInstructions from "./ArrayInstructions";
 import Description from "./Description";
@@ -52,11 +55,23 @@ const RecipeEditForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, 
     });
   }
 
+  function handleMiliseconds(str: string) {
+    return Number(interpretDuration(str).toMilliseconds());
+  }
+
   function handleSubmit(data: RootSchema) {
     const sanitizedIngredients = data.recipeIngredients.filter((o) => o.item !== "");
     const sanitizedInstructions = data.recipeInstructions?.filter((o) => o.item !== "");
-    setRecipe({ ...data, recipeIngredients: sanitizedIngredients, recipeInstructions: sanitizedInstructions });
-    form.reset(data);
+    const convertCookTimes = data?.cookTimes?.map((time) => {
+      return { type: time.type, value: handleMiliseconds(`${time.hr} hour`) + handleMiliseconds(`${time.min} minute`) };
+    });
+    const normalizeParsedCookTimes = convertCookTimes?.map((time) => {
+      return { type: time.type, hr: parseMilliseconds(time.value).hours.toString(), min: parseMilliseconds(time.value).minutes.toString() };
+    });
+
+    const newData = { ...data, recipeIngredients: sanitizedIngredients, recipeInstructions: sanitizedInstructions, convertedCookTimes: convertCookTimes, cookTimes: normalizeParsedCookTimes };
+    setRecipe(newData);
+    form.reset(newData);
     handleCloseEdit();
   }
 
@@ -72,17 +87,6 @@ const RecipeEditForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, 
         </div>
         <Title register={register} onEditFields={onEditFields} name="name" handleDescriptionToggle={handleDescriptionToggle} />
         {onEditFields.description && <Description register={register} />}
-        <FieldWrapper aria-label="Url">
-          <Input {...register("url")} placeholder="Recipe url source" />
-        </FieldWrapper>
-        <FieldWrapper aria-label="Yields">
-          <Input {...register("recipeYield")} type="number" placeholder="Recipe yields" />
-        </FieldWrapper>
-        <FieldWrapper>
-          <button type="button" className="mt-4 flex items-center justify-center space-x-2 rounded-lg bg-dark-2 p-3 transition-all hover:bg-dark-neutral">
-            Add cooking time
-          </button>
-        </FieldWrapper>
         <EditButton handleEditToggle={handleEditToggle} targetKey="ingredients" />
         {onEditFields.ingredients && <ArrayIngredients handleSubmit={handleSubmit} control={control} ingredientRef={ingredientRef} setValue={setValue} getValues={getValues} onEdit={onEditFields} />}
         {recipe?.recipeInstructions && (
@@ -93,6 +97,13 @@ const RecipeEditForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, 
             )}
           </>
         )}
+        <ArrayCooktimes control={control} setValue={setValue} register={register} />
+        <FieldWrapper aria-label="Url">
+          <Input {...register("url")} placeholder="Recipe url source" />
+        </FieldWrapper>
+        <FieldWrapper aria-label="Yields">
+          <Input {...register("recipeYield")} type="number" placeholder="Recipe yields" />
+        </FieldWrapper>
       </div>
       <div className="p-4">
         <button type="submit" className="flex w-full items-center justify-center rounded-lg bg-[hsl(144,40%,36%)] px-4 py-3 text-lg font-bold transition-all hover:bg-[hsl(144,40%,29%)]">
