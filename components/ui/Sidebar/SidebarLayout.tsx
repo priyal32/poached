@@ -1,8 +1,8 @@
-import clsx from "clsx"
-import React from "react"
-import { MdOutlineClose } from "react-icons/md"
+import clsx from "clsx";
+import React from "react";
+import { MdOutlineClose } from "react-icons/md";
 
-type SidebarLayoutProps = { className?: string; children?: React.ReactNode } & ({ handleClose: () => any } | { handleClose?: never })
+type SidebarLayoutProps = { className?: string; children?: React.ReactNode } & ({ handleClose: () => any } | { handleClose?: never });
 
 const SidebarLayout: React.FunctionComponent<SidebarLayoutProps> = ({ className, children, handleClose }) => {
   return (
@@ -17,7 +17,7 @@ const SidebarLayout: React.FunctionComponent<SidebarLayoutProps> = ({ className,
       </header>
       <div className="box-border flex flex-1 flex-col">{children}</div>
     </div>
-  )
-}
+  );
+};
 
-export default SidebarLayout
+export default SidebarLayout;
