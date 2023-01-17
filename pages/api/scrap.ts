@@ -1,6 +1,5 @@
+import { scrapeRecipe } from "libs/scraper/scrape-recipe"
 import { NextApiRequest, NextApiResponse } from "next"
-
-import { scrapeRecipe } from "@/libs/scraper/scrape-recipe"
 
 export default async (request: NextApiRequest, response: NextApiResponse) => {
   const { body } = request

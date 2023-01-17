@@ -1,9 +1,8 @@
+import interpretDuration from "@helpers/interpretDuration";
+import { parseMilliseconds } from "@helpers/msFormatter";
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
-
-import interpretDuration from "@/helpers/interpretDuration";
-import { parseMilliseconds } from "@/helpers/msFormatter";
-import { RootSchema } from "@/types";
+import { RootSchema } from "types";
 
 import Input from "../ui/Form/Input";
 import { Result } from "../ui/recipe/recipe";

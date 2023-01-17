@@ -1,7 +1,6 @@
 import extractDomain from "extract-domain";
+import interpretDuration from "helpers/interpretDuration";
 import getRecipeData from "scrape-recipe-schema";
-
-import interpretDuration from "@/helpers/interpretDuration";
 
 import { allrecipes, eatingwell } from "./alternative-scrapers";
 

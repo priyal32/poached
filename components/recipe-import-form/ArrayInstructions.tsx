@@ -1,9 +1,8 @@
+import useRecipeFields from "@libs/hooks/useRecipeFields";
 import React from "react";
 import { Control, UseFormGetValues, UseFormSetValue } from "react-hook-form";
 
-import useRecipeFields from "@/libs/hooks/useRecipeFields";
-import { RootSchema } from "@/types";
-
+import { RootSchema } from "../../types";
 import FieldWrapper from "./FieldWrapper";
 
 type Props = {

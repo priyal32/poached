@@ -1,12 +1,11 @@
+import interpretDuration from "@helpers/interpretDuration";
+import { formatMilliseconds } from "@helpers/msFormatter";
 import clsx from "clsx";
 import extractDomain from "extract-domain";
 import Image from "next/image";
 import React from "react";
 import { FiLink } from "react-icons/fi";
-
-import interpretDuration from "@/helpers/interpretDuration";
-import { formatMilliseconds } from "@/helpers/msFormatter";
-import { RootSchema } from "@/types";
+import { RootSchema } from "types";
 
 import LayoutDuration from "./layouts/Layout-duration";
 
