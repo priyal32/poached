@@ -22,7 +22,8 @@ const Layout: React.FunctionComponent<Props> = ({ children }) => {
   const ref = React.useRef<HTMLDivElement>(null);
 
   const toggleNavBar = () => setIsNavbarOpen((state) => !state);
-  const isHome = router.pathname.includes("/home");
+  const homePath = router.pathname.match("/");
+  const isHome = homePath && homePath[2] === "/";
 
   React.useEffect(() => {
     function handleResize() {

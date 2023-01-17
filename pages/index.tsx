@@ -1,99 +1,55 @@
-import type { NextPage } from "next";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import React from "react";
-import { useForm } from "react-hook-form";
-import { useQuery } from "react-query";
+import { BsFillArrowRightCircleFill, BsGlobe } from "react-icons/bs";
+import { HiBookOpen, HiCloud, HiLibrary } from "react-icons/hi";
 
-import type { QueryParam } from "@/components/home/types";
-import RecipeEditForm from "@/components/recipe-import-form";
-import { Container } from "@/components/ui";
-import { RecipeLayout, RecipeLayoutSkeleton, RecipeUndefined } from "@/components/ui/recipe";
-import { Result } from "@/components/ui/recipe/recipe";
-import RecipeHeader from "@/components/ui/recipe/Recipe-header";
-import RecipeImportForm from "@/components/ui/recipe/Recipe-import-form";
-import Sidebar from "@/components/ui/Sidebar/Sidebar";
-import SidebarLayout from "@/components/ui/Sidebar/SidebarLayout";
-import { isValidHttpUrl } from "@/helpers/isValidHttp";
-import { parseMilliseconds } from "@/helpers/msFormatter";
-import { RootSchema } from "@/types";
-
-export const Home: NextPage = () => {
-  const router = useRouter();
-  const { url } = router.query as QueryParam;
-
-  const { isFetching: isRequested, data: recipeData } = useQuery<Result | undefined, Error>(["scrapRecipe", url], () => fetchRecipe(url), {
-    refetchOnWindowFocus: false,
-  });
-
-  const [value, setValue] = React.useState<string>(url || "");
-  const [recipe, setRecipe] = React.useState<RootSchema | undefined>(recipeData?.results);
-  const [onEdit, setOnEdit] = React.useState<boolean>(false);
-
-  const form = useForm<RootSchema>({ defaultValues: recipe });
-
-  async function fetchRecipe(targetUrl: string): Promise<Result | undefined> {
-    if (!url) return undefined;
-
-    const response = await fetch(`/api/scrap`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(targetUrl),
-    });
-
-    const recipe: Result = await response.json();
-    setValue("");
-    const parsedCookTimes = recipe.results?.convertedCookTimes?.map((time) => {
-      return { type: time.type, hr: parseMilliseconds(time.value).hours.toString(), min: parseMilliseconds(time.value).minutes.toString() };
-    });
-
-    setRecipe({ ...recipe.results, cookTimes: parsedCookTimes });
-
-    form.reset({ ...recipe.results, cookTimes: parsedCookTimes });
-    return recipe;
-  }
-
-  async function handleSubmitForm(event: React.FormEvent) {
-    event.preventDefault();
-    const query: { url: string } = { url: value };
-    if (!value || !isValidHttpUrl(query.url)) {
-      return alert("Make sure you entered valid url");
-    }
-    router.push({ pathname: "/", query: `url=${decodeURI(query.url)}` });
-  }
-
-  function handleCloseEdit() {
-    setOnEdit(false);
-  }
-
-  const importProps = { handleSubmitForm, isRequested, setValue, value };
-
+const Home = () => {
   return (
-    <section className="relative m-auto flex h-full flex-col">
-      {!isRequested && recipeData?.results && <RecipeHeader {...importProps} setOnEdit={setOnEdit} />}
-      <Container className="m-auto flex flex-col gap-y-8">
-        {!url && !recipeData?.results && (
-          <div className="m-auto flex max-w-xl flex-col items-center justify-center px-4 sm:px-0">
-            <Image src="/poached_logo.png" alt="Poached Logo" width={150} height={150} className="relative mx-auto object-cover" />
-            <p className="mb-6 text-center font-headline text-lg font-bold lg:text-xl">Get just the instructions & ingredients for any recipe. No popups, ads, or annoying clutters</p>
-            <RecipeImportForm {...importProps} wfull />
+    <div className="flex w-full flex-col items-center">
+      <section className="px-6 md:px-0">
+        <div className="gradient-02 absolute inset-0 -z-50 h-[50%] w-[30%] rounded-full opacity-40"></div>
+        <div className="mx-auto max-w-4xl pt-28 md:pt-36">
+          <h2 className="text-center font-headline text-lg font-bold text-[hsl(144,42%,47%)]">The home for all your recipes</h2>
+          <h1 className="text-center font-headline text-4xl font-bold md:text-7xl">All your recipes in one single page.</h1>
+          <p className="mx-auto mt-8 max-w-3xl text-center font-headline text-base md:mt-12 md:text-xl">
+            Import just the recipe from any website without the distractions or clutter. Create meal plans, and generate grocery lists
+          </p>
+          <div className="mt-12 flex items-center justify-center gap-x-4">
+            <button className="flex h-12 items-center gap-x-1.5 rounded-lg bg-[hsl(144,42%,47%)] px-2 md:px-4">
+              <span className="text-sm font-bold md:text-lg">Create an Account</span>
+              <BsFillArrowRightCircleFill className="h-5 w-5" />
+            </button>
+            <button className="flex h-12 items-center gap-x-1.5 rounded-lg px-2 outline outline-dark-1 md:px-4">
+              <span className="text-sm font-bold md:text-lg">Explore</span>
+              <BsGlobe className="h-5 w-5" />
+            </button>
           </div>
-        )}
-        {isRequested && url && <RecipeLayoutSkeleton />}
-        {!isRequested && url && recipe && <RecipeLayout data={recipe} />}
-        {!isRequested && url && !recipeData?.results && <RecipeUndefined {...importProps} />}
-      </Container>
-      {recipe && onEdit && (
-        <Sidebar onClose={handleCloseEdit}>
-          <SidebarLayout handleClose={handleCloseEdit}>
-            <RecipeEditForm handleCloseEdit={handleCloseEdit} form={form} recipe={recipe} setRecipe={setRecipe} recipeData={recipeData} />
-          </SidebarLayout>
-        </Sidebar>
-      )}
-    </section>
+        </div>
+      </section>
+      <div className="py-24 px-6 md:px-0">
+        <Image alt="mock" width={1200} height={700} src="/mock.png" className="rounded-xl" />
+      </div>
+      <section className="w-full px-6 md:px-0">
+        <div className="gradient-01 absolute right-0 -z-50 h-[50%] w-[30%] rounded-full opacity-40"></div>
+        <ul className="grid w-full grid-cols-1 gap-8 md:grid-cols-3">
+          <li>
+            <HiBookOpen className="h-10 w-10" />
+            <h5 className="mt-2 text-xl font-medium">Make recipes your own</h5>
+            <p className="mt-4 text-neutral-400">You can easily edit recipes, save adjustments to ingredients, and add additional steps or tips to your preparation.</p>
+          </li>
+          <li>
+            <HiLibrary className="h-10 w-10" />
+            <h5 className="mt-2 text-xl font-medium">All in one place</h5>
+            <p className="mt-4 text-neutral-400">Storing your recipes in Poached allows you to quickly search, find, and select what you want to cook.</p>
+          </li>
+          <li>
+            <HiCloud className="h-10 w-10" />
+            <h5 className="mt-2 text-xl font-medium">Cook from your favorite device</h5>
+            <p className="mt-4 text-neutral-400">Poached stores your recipes in the Cloud so you can access them on any device through our website or Android/iOS app.</p>
+          </li>
+        </ul>
+      </section>
+    </div>
   );
 };
 
