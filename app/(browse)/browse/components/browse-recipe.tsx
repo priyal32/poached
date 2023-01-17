@@ -75,28 +75,30 @@ const BrowseRecipe = ({ params }: { params: { url: string } }) => {
   const importProps = { handleSubmitForm, isRequested, setValue, value };
 
   return (
-    <section className="relative m-auto flex h-full flex-col">
-      {!isRequested && recipeData?.results && <RecipeHeader {...importProps} setOnEdit={setOnEdit} />}
-      <Container className="m-auto flex flex-col gap-y-8">
-        {!targetUrl && !recipeData?.results && (
-          <div className="m-auto flex max-w-xl flex-col items-center justify-center px-4 sm:px-0">
-            <Image src="/poached_logo.png" alt="Poached Logo" width={150} height={150} className="relative mx-auto object-cover" />
-            <p className="mb-6 text-center font-headline text-lg font-bold lg:text-xl">Get just the instructions & ingredients for any recipe. No popups, ads, or annoying clutters</p>
-            <RecipeImportForm {...importProps} wfull />
-          </div>
+    <div className="h-screen w-full overflow-auto pt-[80px] md:pl-[15rem] md:pt-0">
+      <section className="relative m-auto flex h-full flex-col">
+        {!isRequested && recipeData?.results && <RecipeHeader {...importProps} setOnEdit={setOnEdit} />}
+        <Container className="m-auto flex flex-col gap-y-8">
+          {!targetUrl && !recipeData?.results && (
+            <div className="m-auto flex max-w-xl flex-col items-center justify-center px-4 sm:px-0">
+              <Image src="/poached_logo.png" alt="Poached Logo" width={150} height={150} className="relative mx-auto object-cover" />
+              <p className="mb-6 text-center font-headline text-lg font-bold lg:text-xl">Get just the instructions & ingredients for any recipe. No popups, ads, or annoying clutters</p>
+              <RecipeImportForm {...importProps} wfull />
+            </div>
+          )}
+          {isRequested && targetUrl && <RecipeLayoutSkeleton />}
+          {!isRequested && targetUrl && recipe && <RecipeLayout data={recipe} />}
+          {!isRequested && targetUrl && !recipeData?.results && <RecipeUndefined {...importProps} />}
+        </Container>
+        {recipe && onEdit && (
+          <Sidebar onClose={handleCloseEdit}>
+            <SidebarLayout handleClose={handleCloseEdit}>
+              <RecipeEditForm handleCloseEdit={handleCloseEdit} form={form} recipe={recipe} setRecipe={setRecipe} recipeData={recipeData} />
+            </SidebarLayout>
+          </Sidebar>
         )}
-        {isRequested && targetUrl && <RecipeLayoutSkeleton />}
-        {!isRequested && targetUrl && recipe && <RecipeLayout data={recipe} />}
-        {!isRequested && targetUrl && !recipeData?.results && <RecipeUndefined {...importProps} />}
-      </Container>
-      {recipe && onEdit && (
-        <Sidebar onClose={handleCloseEdit}>
-          <SidebarLayout handleClose={handleCloseEdit}>
-            <RecipeEditForm handleCloseEdit={handleCloseEdit} form={form} recipe={recipe} setRecipe={setRecipe} recipeData={recipeData} />
-          </SidebarLayout>
-        </Sidebar>
-      )}
-    </section>
+      </section>
+    </div>
   );
 };
 
