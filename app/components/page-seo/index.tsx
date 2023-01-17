@@ -1,6 +1,7 @@
-import React from "react";
+"use client";
 
-import config from "@/libs/config";
+import config from "@libs/config";
+import React from "react";
 
 interface PageSeo {
   title?: string;

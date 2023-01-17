@@ -2,7 +2,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
-  swcMinify: true,
   images: {
     remotePatterns: [
       {
@@ -10,6 +9,9 @@ const nextConfig = {
         hostname: "**",
       },
     ],
+  },
+  experimental: {
+    appDir: true,
   },
 };
 

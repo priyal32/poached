@@ -1,23 +1,23 @@
-import { clearAllBodyScrollLocks, disableBodyScroll } from "body-scroll-lock"
-import Link from "next/link"
-import React from "react"
-import { BsGear } from "react-icons/bs"
-import { FaGithub } from "react-icons/fa"
-import { FiAlignRight, FiBook, FiCalendar, FiChevronDown, FiGrid, FiInfo, FiMoon, FiSun } from "react-icons/fi"
+import { clearAllBodyScrollLocks, disableBodyScroll } from "body-scroll-lock";
+import Link from "next/link";
+import React from "react";
+import { BsGear } from "react-icons/bs";
+import { FaGithub } from "react-icons/fa";
+import { FiAlignRight, FiBook, FiCalendar, FiChevronDown, FiGrid, FiInfo, FiMoon, FiSun } from "react-icons/fi";
 
 const Navbar: React.FunctionComponent<{ isOpen: boolean; toggleNavBar: () => void }> = ({ isOpen, toggleNavBar }) => {
-  const ref = React.useRef() as React.MutableRefObject<HTMLDivElement>
+  const ref = React.useRef() as React.MutableRefObject<HTMLDivElement>;
 
   React.useEffect(() => {
-    const mobileNav = ref.current
+    const mobileNav = ref.current;
 
     if (mobileNav) {
-      disableBodyScroll(mobileNav, { reserveScrollBarGap: true })
+      disableBodyScroll(mobileNav, { reserveScrollBarGap: true });
     }
     return () => {
-      clearAllBodyScrollLocks()
-    }
-  }, [isOpen])
+      clearAllBodyScrollLocks();
+    };
+  }, [isOpen]);
 
   return (
     <nav className="relative z-50 flex h-auto w-full flex-col justify-between overflow-auto bg-dark-2 md:fixed md:h-full md:w-[15rem] md:bg-dark-1">
@@ -150,7 +150,7 @@ const Navbar: React.FunctionComponent<{ isOpen: boolean; toggleNavBar: () => voi
         </div>
       )}
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
