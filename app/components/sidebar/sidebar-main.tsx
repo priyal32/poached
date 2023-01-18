@@ -1,38 +1,38 @@
-import { clearAllBodyScrollLocks, disableBodyScroll } from "body-scroll-lock"
-import React from "react"
+import { clearAllBodyScrollLocks, disableBodyScroll } from "body-scroll-lock";
+import React from "react";
 
-import s from "./Sidebar.module.css"
+import s from "./sidebar.module.css";
 
 interface SidebarProps {
-  children: React.ReactNode
-  onClose(): void
+  children: React.ReactNode;
+  onClose(): void;
 }
 
 const Sidebar: React.FunctionComponent<SidebarProps> = ({ children, onClose }) => {
-  const sidebarRef = React.useRef() as React.MutableRefObject<HTMLDivElement>
-  const contentRef = React.useRef() as React.MutableRefObject<HTMLDivElement>
+  const sidebarRef = React.useRef() as React.MutableRefObject<HTMLDivElement>;
+  const contentRef = React.useRef() as React.MutableRefObject<HTMLDivElement>;
 
   const onKeyDownSidebar = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.code === "Escape") {
-      onClose()
+      onClose();
     }
-  }
+  };
 
   React.useEffect(() => {
     if (sidebarRef.current) {
-      sidebarRef.current.focus()
+      sidebarRef.current.focus();
     }
 
-    const contentElement = contentRef.current
+    const contentElement = contentRef.current;
 
     if (contentElement) {
-      disableBodyScroll(contentElement, { reserveScrollBarGap: true })
+      disableBodyScroll(contentElement, { reserveScrollBarGap: true });
     }
 
     return () => {
-      clearAllBodyScrollLocks()
-    }
-  }, [])
+      clearAllBodyScrollLocks();
+    };
+  }, []);
 
   return (
     <div className={s.root} ref={sidebarRef} onKeyDown={onKeyDownSidebar} tabIndex={1}>
@@ -47,7 +47,7 @@ const Sidebar: React.FunctionComponent<SidebarProps> = ({ children, onClose }) =
         </section>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

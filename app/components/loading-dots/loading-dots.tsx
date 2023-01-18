@@ -1,6 +1,6 @@
-import React from "react"
+import React from "react";
 
-import s from "./LoadingDots.module.css"
+import s from "./loading-dots.module.css";
 
 const LoadingDots: React.FC = () => {
   return (
@@ -9,7 +9,7 @@ const LoadingDots: React.FC = () => {
       <span className={s.dot} key={`dot_2`} />
       <span className={s.dot} key={`dot_3`} />
     </span>
-  )
-}
+  );
+};
 
-export default LoadingDots
+export default LoadingDots;

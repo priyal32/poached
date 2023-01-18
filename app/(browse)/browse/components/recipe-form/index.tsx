@@ -1,17 +1,17 @@
+import Input from "@components/form/input-field";
 import interpretDuration from "@helpers/interpretDuration";
 import { parseMilliseconds } from "@helpers/msFormatter";
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
 import { RootSchema } from "types";
 
-import Input from "../ui/Form/Input";
-import ArrayCooktimes from "./ArrayCooktimes";
-import ArrayIngredients from "./ArrayIngredients";
-import ArrayInstructions from "./ArrayInstructions";
-import Description from "./Description";
-import EditButton from "./EditButton";
-import FieldWrapper from "./FieldWrapper";
-import Title from "./Title";
+import CooktimeFields from "./cooktime-fields";
+import Description from "./description-field";
+import EditButton from "./edit-button";
+import IngredientFields from "./ingredient-fields";
+import InstructionFields from "./instruction.fields";
+import Title from "./title-field";
+import Wrapper from "./wrapper";
 
 type Result = {
   message: string;
@@ -28,7 +28,7 @@ type Props = {
   handleCloseEdit: () => void;
 };
 
-const RecipeEditForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, handleCloseEdit }) => {
+const RecipeForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, handleCloseEdit }) => {
   const initialEdit = {
     description: recipe?.description ? (recipe?.description ? true : false) : false,
     ingredients: false,
@@ -93,22 +93,22 @@ const RecipeEditForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, 
         <Title register={register} onEditFields={onEditFields} name="name" handleDescriptionToggle={handleDescriptionToggle} />
         {onEditFields.description && <Description register={register} />}
         <EditButton handleEditToggle={handleEditToggle} targetKey="ingredients" />
-        {onEditFields.ingredients && <ArrayIngredients handleSubmit={handleSubmit} control={control} ingredientRef={ingredientRef} setValue={setValue} getValues={getValues} onEdit={onEditFields} />}
+        {onEditFields.ingredients && <IngredientFields handleSubmit={handleSubmit} control={control} ingredientRef={ingredientRef} setValue={setValue} getValues={getValues} onEdit={onEditFields} />}
         {recipe?.recipeInstructions && (
           <>
             <EditButton handleEditToggle={handleEditToggle} targetKey="instructions" />
             {onEditFields.instructions && (
-              <ArrayInstructions handleSubmit={handleSubmit} control={control} instructionsRef={instructionsRef} setValue={setValue} getValues={getValues} onEdit={onEditFields} />
+              <InstructionFields handleSubmit={handleSubmit} control={control} instructionsRef={instructionsRef} setValue={setValue} getValues={getValues} onEdit={onEditFields} />
             )}
           </>
         )}
-        <ArrayCooktimes control={control} setValue={setValue} register={register} />
-        <FieldWrapper aria-label="Url">
+        <CooktimeFields control={control} setValue={setValue} register={register} />
+        <Wrapper aria-label="Url">
           <Input {...register("url")} placeholder="Recipe url source" />
-        </FieldWrapper>
-        <FieldWrapper aria-label="Yields">
+        </Wrapper>
+        <Wrapper aria-label="Yields">
           <Input {...register("recipeYield")} type="number" placeholder="Recipe yields" />
-        </FieldWrapper>
+        </Wrapper>
       </div>
       <div className="p-4">
         <button type="submit" className="flex w-full items-center justify-center rounded-lg bg-[hsl(144,40%,36%)] px-4 py-3 text-lg font-bold transition-all hover:bg-[hsl(144,40%,29%)]">
@@ -119,4 +119,4 @@ const RecipeEditForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, 
   );
 };
 
-export default RecipeEditForm;
+export default RecipeForm;
