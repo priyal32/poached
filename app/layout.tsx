@@ -1,6 +1,6 @@
 "use client";
 
-import "@/styles/globals.css";
+import "@styles/globals.css";
 
 import React, { PropsWithChildren } from "react";
 

@@ -7,7 +7,7 @@ import React from "react";
 import { FiLink } from "react-icons/fi";
 import { RootSchema } from "types";
 
-import LayoutDuration from "./layouts/Layout-duration";
+import RecipeDuration from "./recipe-duration";
 
 type RecipeInner = {
   data: RootSchema;
@@ -43,7 +43,7 @@ const RecipeLayout: React.FunctionComponent<RecipeInner> = ({ data }) => {
             const minute = `${time.min} minute`;
             const formatedTime = formatMilliseconds(handleToMiliseconds(hour, minute), { units: "long" });
 
-            return <LayoutDuration key={time.type} label={time.type} data={formatedTime} />;
+            return <RecipeDuration key={time.type} label={time.type} data={formatedTime} />;
           })}
         </dl>
         <p className={(clsx(data.description ? "block" : "hidden"), "mt-8 md:mt-12")}>{data.description}</p>

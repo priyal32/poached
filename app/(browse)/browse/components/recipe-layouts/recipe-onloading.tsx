@@ -1,6 +1,6 @@
-import React from "react"
+import React from "react";
 
-const RecipeLayoutSkeleton: React.FunctionComponent = () => {
+const RecipeOnLoading: React.FunctionComponent = () => {
   return (
     <article className="block grid-flow-row-dense grid-cols-12 gap-x-24 gap-y-16 lg:grid" aria-label="recipe-skeleton">
       <div className="col-start-6 col-end-13 mb-8 h-fit lg:mb-0">
@@ -55,7 +55,7 @@ const RecipeLayoutSkeleton: React.FunctionComponent = () => {
         </ol>
       </div>
     </article>
-  )
-}
+  );
+};
 
-export default RecipeLayoutSkeleton
+export default RecipeOnLoading;

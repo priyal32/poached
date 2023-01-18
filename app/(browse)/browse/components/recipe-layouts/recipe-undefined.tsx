@@ -1,15 +1,15 @@
-import Image from "next/image"
-import React from "react"
-import { AiFillWarning } from "react-icons/ai"
+import Image from "next/image";
+import React from "react";
+import { AiFillWarning } from "react-icons/ai";
 
-import RecipeImportForm from "./Recipe-import-form"
+import ImportField from "./import-field";
 
 type Props = {
-  handleSubmitForm: (event: React.FormEvent) => Promise<void>
-  setValue: (value: React.SetStateAction<string>) => void
-  value?: string
-  isRequested: boolean
-}
+  handleSubmitForm: (event: React.FormEvent) => Promise<void>;
+  setValue: (value: React.SetStateAction<string>) => void;
+  value?: string;
+  isRequested: boolean;
+};
 
 const UnsupportedAlert = () => {
   return (
@@ -25,11 +25,11 @@ const UnsupportedAlert = () => {
         </span>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const RecipeUndefined: React.FunctionComponent<Props> = ({ value, setValue, handleSubmitForm, isRequested }) => {
-  const importProps = { handleSubmitForm, isRequested, setValue, value }
+  const importProps = { handleSubmitForm, isRequested, setValue, value };
 
   return (
     <div className="ml-0 flex flex-col items-center justify-center py-8 md:h-auto lg:ml-[-6rem] lg:flex-row">
@@ -43,10 +43,10 @@ const RecipeUndefined: React.FunctionComponent<Props> = ({ value, setValue, hand
         </div>
         <h5 className="text-2xl font-bold">We didn&apos;t find a recipe here !</h5>
         <p className="mt-1 pb-4 text-gray-500">This often happens when a website&apos;s code is formatted incorrectly or the website is currently not supported by Poached</p>
-        <RecipeImportForm {...importProps} placeHolder="Try another recipe URL" wfull />
+        <ImportField {...importProps} placeHolder="Try another recipe URL" wfull />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default RecipeUndefined
+export default RecipeUndefined;

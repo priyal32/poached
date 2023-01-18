@@ -1,9 +1,8 @@
 "use client";
 
+import Container from "@components/container";
 import SidebarLayout from "@components/sidebar/sidebar-layout";
 import Sidebar from "@components/sidebar/sidebar-main";
-import { Container } from "components/ui";
-import { RecipeLayout, RecipeLayoutSkeleton, RecipeUndefined } from "components/ui/recipe";
 import { isValidHttpUrl } from "helpers/isValidHttp";
 import { parseMilliseconds } from "helpers/msFormatter";
 import Image from "next/image";
@@ -15,6 +14,9 @@ import { RootSchema } from "types";
 import RecipeForm from "./components/recipe-form";
 import Header from "./components/recipe-layouts/header";
 import ImportField from "./components/recipe-layouts/import-field";
+import RecipeLayout from "./components/recipe-layouts/recipe-main";
+import RecipeOnLoading from "./components/recipe-layouts/recipe-onloading";
+import RecipeUndefined from "./components/recipe-layouts/recipe-undefined";
 
 type Result = {
   message: string;
@@ -24,12 +26,12 @@ type Result = {
 };
 
 type SearchParams = {
-  searchParams: { url: string };
+  searchParams?: { url: string };
 };
 
 const BrowsePage = ({ searchParams }: SearchParams) => {
   const [value, setValue] = React.useState<string>("");
-  const [targetUrl, setTargetUrl] = React.useState<string>(searchParams.url || "");
+  const [targetUrl, setTargetUrl] = React.useState<string>(searchParams?.url || "");
 
   const { isFetching: isRequested, data: recipeData } = useQuery<Result | undefined, Error>(["scrapRecipe", targetUrl], () => fetchRecipe(targetUrl), {
     refetchOnWindowFocus: false,
@@ -92,7 +94,7 @@ const BrowsePage = ({ searchParams }: SearchParams) => {
               <ImportField {...importProps} wfull />
             </div>
           )}
-          {isRequested && targetUrl && <RecipeLayoutSkeleton />}
+          {isRequested && targetUrl && <RecipeOnLoading />}
           {!isRequested && targetUrl && recipe && <RecipeLayout data={recipe} />}
           {!isRequested && targetUrl && !recipeData?.results && <RecipeUndefined {...importProps} />}
         </Container>
