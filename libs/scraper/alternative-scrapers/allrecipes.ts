@@ -1,6 +1,5 @@
 import * as cheerio from "cheerio";
-
-import { RootSchema } from "@/types";
+import { RootSchema } from "types";
 
 import { Recipe } from "../Recipe";
 import { getDescriptionFromSelector, getImageFromSelector } from "../selectors";

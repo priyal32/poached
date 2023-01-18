@@ -1,7 +1,6 @@
 import React from "react";
 import { Control, useFieldArray, UseFormGetValues, UseFormSetValue } from "react-hook-form";
-
-import { RootSchema } from "@/types";
+import { RootSchema } from "types";
 
 type Props = {
   control: Control<RootSchema, any>;
