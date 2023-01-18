@@ -1,26 +1,25 @@
-import "cross-fetch/polyfill"
+import "cross-fetch/polyfill";
 
-import getRecipeData from "scrape-recipe-schema"
+import getRecipeData from "scrape-recipe-schema";
+import { RootSchema } from "types";
 
-import { RootSchema } from "@/types"
-
-import { microdata } from "../__mocks__/microdata"
+import { microdata } from "../__mocks__/microdata";
 
 describe("getRecipeData", () => {
   const setup = (data: any) => {
     return async () => {
-      const html = await fetch(data.url)
+      const html = await fetch(data.url);
 
       if (!html) {
-        expect(true)
+        expect(true);
       } else {
-        const actualRecipe = await getRecipeData({ html: await html.text() })
-        expect(data.expectedData).toMatchObject(actualRecipe.data as RootSchema)
+        const actualRecipe = await getRecipeData({ html: await html.text() });
+        expect(data.expectedData).toMatchObject(actualRecipe.data as unknown as RootSchema);
       }
-    }
-  }
+    };
+  };
 
   microdata.tests.forEach((test) => {
-    it(`should fetch the expected recipe (${test.url})`, setup(test))
-  })
-})
+    it(`should fetch the expected recipe (${test.url})`, setup(test));
+  });
+});
