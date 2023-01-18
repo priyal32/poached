@@ -1,5 +1,8 @@
 type Config = {
   url: string;
+  repo_url: string;
+  github_access_token: string;
+  repo_api_url: string;
 };
 
 type EnvironmentValue = string | undefined;
@@ -19,6 +22,9 @@ export const config = (env: Environment): Config => {
 
   const config: Config = {
     url: is_production ? "https://poached.vercel.app" : "http://localhost:3000",
+    repo_url: env.REPO_URL ?? "",
+    repo_api_url: env.REPO_STATS ?? "",
+    github_access_token: env.GITHUB_ACCESS_TOKEN ?? "",
   };
 
   return config;

@@ -4,7 +4,7 @@ import React, { PropsWithChildren } from "react";
 
 const LandingLayout = ({ children }: PropsWithChildren<unknown>) => {
   return (
-    <main className={clsx("flex h-auto flex-col md:h-screen")}>
+    <main className={clsx("flex flex-col")}>
       <HomeNavigation />
       {children}
     </main>
