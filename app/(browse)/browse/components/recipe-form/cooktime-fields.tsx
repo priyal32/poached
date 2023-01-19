@@ -6,6 +6,7 @@ import { BsClock } from "react-icons/bs";
 import { FiMenu, FiTrash2 } from "react-icons/fi";
 import { RootSchema } from "types";
 
+import styles from "./cooktime-fields.module.css";
 import Wrapper from "./wrapper";
 
 type Props = {
@@ -46,27 +47,31 @@ const CooktimeFields: React.FunctionComponent<Props> = ({ control, register }) =
                 <Draggable key={_.id} draggableId={_.id} index={id}>
                   {(provided) => (
                     <div className={clsx("flex items-center space-x-2", id !== 0 && "mt-2")} ref={provided.innerRef} {...provided.dragHandleProps} {...provided.draggableProps}>
-                      <div className="relative flex w-1/3 items-center">
-                        <div className="mr-1 h-10 w-10 md:mr-0">
-                          <FiMenu className="absolute bottom-0 mr-1 h-5 w-5 -translate-y-1/2" />
-                        </div>
-                        <div className="flex flex-col">
-                          <div className="text-sm text-neutral-400">Title</div>
-                          <input {...register(`cookTimes.${id}.type`)} type="text" className="w-full rounded-md bg-dark-2 p-2 text-sm focus:outline-none" />
+                      <div className="relative w-1/3">
+                        <div className="flex items-end">
+                          <button type="button" className={clsx(styles.action, "mr-1 md:mr-0")}>
+                            <svg viewBox="0 0 20 20" width="17">
+                              <path d="M7 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 2zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 7 14zm6-8a2 2 0 1 0-.001-4.001A2 2 0 0 0 13 6zm0 2a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 8zm0 6a2 2 0 1 0 .001 4.001A2 2 0 0 0 13 14z"></path>
+                            </svg>
+                          </button>
+                          <div className="flex flex-col">
+                            <div className="text-sm text-neutral-400">Title</div>
+                            <input {...register(`cookTimes.${id}.type`)} type="text" className="w-full rounded-md bg-dark-2 p-2 text-sm focus:outline-none" />
+                          </div>
                         </div>
                       </div>
                       <div className="w-1/3">
                         <div className="text-sm text-neutral-400">Minutes</div>
-                        <input {...register(`cookTimes.${id}.min`)} type="text" className="w-full rounded-md bg-dark-2 bg-transparent p-2 text-sm focus:outline-none" />
+                        <input {...register(`cookTimes.${id}.min`)} type="text" className="w-full rounded-md bg-dark-2   p-2 text-sm focus:outline-none" />
                       </div>
                       <div className="w-1/3">
                         <div className="text-sm text-neutral-400">Hours</div>
                         <div className="flex items-center">
-                          <input {...register(`cookTimes.${id}.hr`)} type="text" className="w-full rounded-md bg-dark-2 bg-transparent p-2 text-sm focus:outline-none" />
+                          <input {...register(`cookTimes.${id}.hr`)} type="text" className="w-full rounded-md bg-dark-2  p-2 text-sm focus:outline-none" />
                           <FiTrash2
                             data-rbd-drag-handle-context-id={provided.dragHandleProps?.["data-rbd-drag-handle-context-id"]}
                             data-rbd-drag-handle-draggable-id="gibberish"
-                            className="ml-1.5 h-5 w-5"
+                            className="ml-1.5 h-5 w-5 text-[#6f7b88]"
                             style={{ cursor: "pointer" }}
                             onClick={(event) => {
                               event.stopPropagation();
