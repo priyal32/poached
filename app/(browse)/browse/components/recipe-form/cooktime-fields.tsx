@@ -3,7 +3,7 @@ import React from "react";
 import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
 import { Control, useFieldArray, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { BsClock } from "react-icons/bs";
-import { FiMenu, FiTrash2 } from "react-icons/fi";
+import { FiTrash2 } from "react-icons/fi";
 import { RootSchema } from "types";
 
 import styles from "./cooktime-fields.module.css";
