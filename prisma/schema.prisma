@@ -48,12 +48,14 @@ model User {
   updatedAt     DateTime  @updatedAt
   name          String?
   email         String?   @unique
-  password      String?
   emailVerified DateTime?
   image         String?
   role          String?   @default("user")
+  displayName   String?
   accounts      Account[]
   sessions      Session[]
+  username      String?   @unique
+  password      String?   @map("hashed_password")
 }
 
 model VerificationToken {
