@@ -75,16 +75,6 @@ const providers = () => {
               throw new Error("Incorrect username or password");
             }
           } else {
-            if (config.registration_password) {
-              if (!credentials.registration_password) {
-                throw new Error("Missing registration password");
-              }
-
-              if (credentials.registration_password !== config.registration_password) {
-                throw new Error("Incorrect registration password");
-              }
-            }
-
             if (user) {
               throw new Error("Username already taken");
             }
@@ -181,7 +171,7 @@ export const authOptions: NextAuthOptions = {
         name: dbUser.displayName,
         email: dbUser.email,
         picture: dbUser.image,
-        role: dbUser.role || "user",
+        role: dbUser?.role || "user",
         username: dbUser.username,
         sessionToken: token.sessionToken,
       };

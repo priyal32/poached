@@ -9,7 +9,6 @@ type Config = {
   google_client_secret: string;
   credential_auth: boolean;
   nextauth_secret: string;
-  registration_password: string;
 };
 
 type EnvironmentValue = string | undefined;
@@ -28,6 +27,7 @@ export const config = (env: Environment): Config => {
 
   const throwIfUndefined = (key: keyof Environment): string => {
     const value = env[key];
+    console.log(value);
     if (value === undefined) {
       throw new Error(`Missing environment variable: ${key}`);
     }
@@ -50,8 +50,6 @@ export const config = (env: Environment): Config => {
 
   validNodeEnvs(env.NODE_ENV);
 
-  throwIfUndefined("DATABASE_URL");
-
   const config: Config = {
     is_production,
     url: is_production ? "https://poached.vercel.app" : "http://localhost:3000",
@@ -61,8 +59,7 @@ export const config = (env: Environment): Config => {
     google_client_id: env.GOOGLE_CLIENT_ID ?? "",
     google_client_secret: env.GOOGLE_CLIENT_SECRET ?? "",
     credential_auth: stringToBoolean("CREDENTIAL_AUTH") ?? true,
-    nextauth_secret: throwIfUndefined("NEXTAUTH_SECRET"),
-    registration_password: env.REGISTRATION_PASSWORD ?? "",
+    nextauth_secret: env.NEXTAUTH_SECRET ?? "",
     enable_admin: stringToBoolean("ENABLE_ADMIN"),
   };
 
