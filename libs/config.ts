@@ -25,15 +25,15 @@ export const config = (env: Environment): Config => {
     }
   };
 
-  const throwIfUndefined = (key: keyof Environment): string => {
-    const value = env[key];
-    console.log(value);
-    if (value === undefined) {
-      throw new Error(`Missing environment variable: ${key}`);
-    }
+  // const throwIfUndefined = (key: keyof Environment): string => {
+  //   const value = env[key];
+  //   console.log(value);
+  //   if (value === undefined) {
+  //     throw new Error(`Missing environment variable: ${key}`);
+  //   }
 
-    return value;
-  };
+  //   return value;
+  // };
 
   const validNodeEnvs = (str: EnvironmentValue) => {
     const valid = ["development", "production", "test"];
