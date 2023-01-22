@@ -3,9 +3,12 @@
 import Container from "@components/container";
 import SidebarLayout from "@components/sidebar/sidebar-layout";
 import Sidebar from "@components/sidebar/sidebar-main";
+import { useSession } from "@libs/use-session-rq";
 import { isValidHttpUrl } from "helpers/isValidHttp";
 import { parseMilliseconds } from "helpers/msFormatter";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
@@ -30,6 +33,8 @@ type SearchParams = {
 };
 
 const BrowsePage = ({ searchParams }: SearchParams) => {
+  const router = useRouter();
+  const { isAuthenticated, session } = useSession();
   const [value, setValue] = React.useState<string>("");
   const [targetUrl, setTargetUrl] = React.useState<string>(searchParams?.url || "");
 
@@ -81,10 +86,16 @@ const BrowsePage = ({ searchParams }: SearchParams) => {
     setOnEdit(false);
   }
 
+  if (!isAuthenticated) {
+    router.push("signin");
+    return null;
+  }
+
   const importProps = { handleSubmitForm, isRequested, setValue, value };
   return (
     <div className="h-screen w-full overflow-auto pt-[80px] md:pl-[15rem] md:pt-0">
       <section className="relative m-auto flex h-full flex-col">
+        <h1 onClick={() => signOut()}>test</h1>
         {!isRequested && recipeData?.results && <Header {...importProps} setOnEdit={setOnEdit} />}
         <Container className="m-auto flex flex-col gap-y-8">
           {!targetUrl && !recipeData?.results && (

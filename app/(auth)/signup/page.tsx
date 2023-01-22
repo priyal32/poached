@@ -21,7 +21,7 @@ const RegisterPage = () => {
             <BsEggFried className="mx-auto h-6 w-6" />
 
             <h1 className="text-2xl font-bold">Create an account</h1>
-            <p className="text-sm text-slate-100">Enter your username below to create your account</p>
+            <p className="text-sm text-slate-100">Enter your credentials below to create your account</p>
           </div>
           <UserAuthForm signingIn={false} />
           <p className="px-8 text-center text-sm text-slate-100">
