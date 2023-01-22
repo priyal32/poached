@@ -143,6 +143,7 @@ export const authOptions: NextAuthOptions = {
         session.user.image = token.picture;
         session.user.role = token.role;
         session.user.sessionToken = token.sessionToken;
+        session.user.username = token.username as string;
       }
 
       return session;

@@ -10,6 +10,7 @@ declare module "next-auth/jwt" {
     id: UserId;
     role: string;
     sessionToken: string;
+    username: string | null;
   }
 }
 
@@ -19,6 +20,7 @@ declare module "next-auth" {
       id: UserId;
       role: string;
       sessionToken: string;
+      username: string;
     };
   }
 

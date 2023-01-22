@@ -1,3 +1,4 @@
+import { useSession } from "@libs/use-session-rq";
 import { clearAllBodyScrollLocks, disableBodyScroll } from "body-scroll-lock";
 import Link from "next/link";
 import React from "react";
@@ -7,6 +8,7 @@ import { FiAlignRight, FiBook, FiCalendar, FiChevronDown, FiGrid, FiInfo, FiMoon
 
 const Navbar: React.FunctionComponent<{ isOpen: boolean; toggleNavBar: () => void }> = ({ isOpen, toggleNavBar }) => {
   const ref = React.useRef() as React.MutableRefObject<HTMLDivElement>;
+  const { isAuthenticated, isLoading, session } = useSession();
 
   React.useEffect(() => {
     const mobileNav = ref.current;
@@ -81,7 +83,7 @@ const Navbar: React.FunctionComponent<{ isOpen: boolean; toggleNavBar: () => voi
             <div className="flex items-center">
               <div className="h-9 w-9 rounded-full bg-neutral-400"></div>
               <div className="ml-3">
-                <strong className="text-sm font-light">John Doe</strong>
+                <strong className="text-sm font-light">{session?.user.username}</strong>
                 <h1 className="text-xs text-neutral-500">johndoe@gmail.com</h1>
               </div>
             </div>
@@ -135,13 +137,18 @@ const Navbar: React.FunctionComponent<{ isOpen: boolean; toggleNavBar: () => voi
                 </div>
               </div>
               <div className="flex items-center justify-between px-5 pt-6 md:hidden">
-                <div className="flex items-center">
-                  <div className="h-9 w-9 rounded-full bg-neutral-400"></div>
-                  <div className="ml-3">
-                    <strong className="text-sm font-light">John Doe</strong>
-                    <h1 className="text-xs text-neutral-500">johndoe@gmail.com</h1>
+                {isLoading ? (
+                  "loading"
+                ) : (
+                  <div className="flex items-center">
+                    <div className="h-9 w-9 rounded-full bg-neutral-400"></div>
+                    <div className="ml-3">
+                      <strong className="text-sm font-light">{session?.user.name}</strong>
+                      <h1 className="text-xs text-neutral-500">johndoe@gmail.com</h1>
+                    </div>
                   </div>
-                </div>
+                )}
+
                 <FiChevronDown />
               </div>
             </section>
