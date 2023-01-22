@@ -8,7 +8,6 @@ import { isValidHttpUrl } from "helpers/isValidHttp";
 import { parseMilliseconds } from "helpers/msFormatter";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { signOut } from "next-auth/react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
@@ -46,7 +45,7 @@ const BrowsePage = ({ searchParams }: SearchParams) => {
   const form = useForm<RootSchema>({ defaultValues: recipe });
 
   const router = useRouter();
-  const { isAuthenticated, session } = useSession();
+  const { isAuthenticated } = useSession();
 
   async function fetchRecipe(url: string): Promise<Result | undefined> {
     if (!url) return undefined;
@@ -96,7 +95,6 @@ const BrowsePage = ({ searchParams }: SearchParams) => {
   return (
     <div className="h-screen w-full overflow-auto pt-[80px] md:pl-[15rem] md:pt-0">
       <section className="relative m-auto flex h-full flex-col">
-        <h1 onClick={() => console.log(session)}>test</h1>
         {!isRequested && recipeData?.results && <Header {...importProps} setOnEdit={setOnEdit} />}
         <Container className="m-auto flex flex-col gap-y-8">
           {!targetUrl && !recipeData?.results && (
