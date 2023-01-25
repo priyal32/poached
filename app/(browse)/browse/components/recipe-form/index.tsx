@@ -1,3 +1,4 @@
+import ErrorMessage from "@components/form/error-message";
 import Input from "@components/form/input-field";
 import interpretDuration from "@helpers/interpretDuration";
 import { parseMilliseconds } from "@helpers/msFormatter";
@@ -28,6 +29,9 @@ type Props = {
   handleCloseEdit: () => void;
 };
 
+type IngredientHandle = React.ElementRef<typeof IngredientFields>;
+type InstructionHandle = React.ElementRef<typeof InstructionFields>;
+
 const RecipeForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, handleCloseEdit }) => {
   const initialEdit = {
     description: recipe?.description ? (recipe?.description ? true : false) : false,
@@ -35,14 +39,20 @@ const RecipeForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, hand
     instructions: false,
   };
 
-  const { register, control, setValue, getValues } = form;
+  const {
+    register,
+    control,
+    setValue,
+    getValues,
+    formState: { errors },
+  } = form;
 
   const [onEditFields, setOnEditFields] = React.useState<{
     [key: string]: boolean;
   }>(initialEdit);
 
-  const ingredientRef = React.useRef<(HTMLLIElement | null)[]>([]);
-  const instructionsRef = React.useRef<(HTMLOListElement | null)[]>([]);
+  const instructionElement = React.useRef<InstructionHandle>(null);
+  const ingredientElement = React.useRef<IngredientHandle>(null);
 
   function handleDescriptionToggle() {
     if (onEditFields.description) {
@@ -65,6 +75,9 @@ const RecipeForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, hand
   }
 
   function handleSubmit(data: RootSchema) {
+    instructionElement.current?.remove();
+    ingredientElement.current?.remove();
+
     const sanitizedIngredients = data.recipeIngredients.filter((o) => o.item !== "");
     const sanitizedInstructions = data.recipeInstructions?.filter((o) => o.item !== "");
     const convertCookTimes = data?.cookTimes?.map((time) => {
@@ -90,24 +103,24 @@ const RecipeForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, hand
         <div className="border-b border-b-dark-neutral">
           <h1 className="mb-2 pb-2 font-headline text-2xl font-bold">Edit recipe</h1>
         </div>
-        <Title register={register} onEditFields={onEditFields} name="name" handleDescriptionToggle={handleDescriptionToggle} />
+        <Title errors={errors.name} register={register} onEditFields={onEditFields} name="name" handleDescriptionToggle={handleDescriptionToggle} />
         {onEditFields.description && <Description register={register} />}
         <EditButton handleEditToggle={handleEditToggle} targetKey="ingredients" />
-        {onEditFields.ingredients && <IngredientFields handleSubmit={handleSubmit} control={control} ingredientRef={ingredientRef} setValue={setValue} getValues={getValues} onEdit={onEditFields} />}
+        {onEditFields.ingredients && <IngredientFields ref={ingredientElement} control={control} setValue={setValue} getValues={getValues} onEdit={onEditFields} />}
         {recipe?.recipeInstructions && (
           <>
             <EditButton handleEditToggle={handleEditToggle} targetKey="instructions" />
-            {onEditFields.instructions && (
-              <InstructionFields handleSubmit={handleSubmit} control={control} instructionsRef={instructionsRef} setValue={setValue} getValues={getValues} onEdit={onEditFields} />
-            )}
+            {onEditFields.instructions && <InstructionFields ref={instructionElement} control={control} setValue={setValue} getValues={getValues} onEdit={onEditFields} />}
           </>
         )}
-        <CooktimeFields control={control} setValue={setValue} register={register} />
+        <CooktimeFields errors={errors.cookTimes} control={control} setValue={setValue} register={register} />
         <Wrapper aria-label="Url">
           <Input {...register("url")} placeholder="Recipe url source" />
+          {errors.url && <ErrorMessage>{errors.url.message}</ErrorMessage>}
         </Wrapper>
         <Wrapper aria-label="Yields">
-          <Input {...register("recipeYield")} type="number" placeholder="Recipe yields" />
+          <Input {...register("recipeYield", { valueAsNumber: true })} type="number" placeholder="Recipe yields" />
+          {errors.recipeYield && <ErrorMessage>{errors.recipeYield.message}</ErrorMessage>}
         </Wrapper>
       </div>
       <div className="p-4">

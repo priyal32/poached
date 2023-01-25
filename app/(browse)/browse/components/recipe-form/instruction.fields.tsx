@@ -6,17 +6,19 @@ import { RootSchema } from "types";
 import Wrapper from "./wrapper";
 
 type Props = {
-  instructionsRef: React.MutableRefObject<(HTMLOListElement | null)[]>;
   control: Control<RootSchema, any>;
   setValue: UseFormSetValue<RootSchema>;
   onEdit: {
     [key: string]: boolean;
   };
   getValues: UseFormGetValues<RootSchema>;
-  handleSubmit(data: RootSchema): void;
 };
 
-const InstructionFields: React.FunctionComponent<Props> = ({ instructionsRef, control, setValue, onEdit, getValues, handleSubmit }) => {
+type InstrucitonHandle = { remove: () => void };
+
+const InstructionFields = React.forwardRef<InstrucitonHandle, Props>(({ control, setValue, onEdit, getValues }, ref) => {
+  const instructionsRef = React.useRef<(HTMLOListElement | null)[]>([]);
+
   const { fields, append, removeLastEmptyField, handleOnEnter } = useRecipeFields({
     control,
     fieldRef: instructionsRef,
@@ -26,9 +28,11 @@ const InstructionFields: React.FunctionComponent<Props> = ({ instructionsRef, co
     onEdit: onEdit.instructions,
   });
 
-  React.useEffect(() => {
-    removeLastEmptyField();
-  }, [handleSubmit]);
+  React.useImperativeHandle(ref, () => ({
+    remove() {
+      removeLastEmptyField();
+    },
+  }));
 
   return (
     <Wrapper el="ul" aria-label="Ingredients">
@@ -55,6 +59,8 @@ const InstructionFields: React.FunctionComponent<Props> = ({ instructionsRef, co
       </button>
     </Wrapper>
   );
-};
+});
+
+InstructionFields.displayName = "InstructionFields";
 
 export default InstructionFields;

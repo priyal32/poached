@@ -1,5 +1,5 @@
 export type RootSchema = {
-  url?: string;
+  url: string;
   name: string;
   image?: string;
   description?: string;
@@ -11,7 +11,7 @@ export type RootSchema = {
   totalTimeOriginalFormat?: string;
   prepTime?: string;
   totalTime?: string;
-  recipeYield?: number | string;
+  recipeYield: number | string;
   recipeIngredients: { item: string; id: number }[];
   recipeInstructions?: { item: string; id: number }[];
   convertedCookTimes?: { type: string; value: number }[];

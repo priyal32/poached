@@ -12,7 +12,7 @@ export function Recipe(this: RootSchema) {
   this.cookTimeOriginalFormat = "";
   this.prepTimeOriginalFormat = "";
   this.totalTimeOriginalFormat = "";
-  this.recipeYield = undefined;
+  this.recipeYield = 0;
   this.recipeCategories = [];
   this.recipeCuisines = [];
   this.recipeTypes = [];

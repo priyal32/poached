@@ -3,7 +3,9 @@
 import Container from "@components/container";
 import SidebarLayout from "@components/sidebar/sidebar-layout";
 import Sidebar from "@components/sidebar/sidebar-main";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useSession } from "@libs/use-session-rq";
+import { recipeSchema } from "@libs/validations/recipe";
 import { isValidHttpUrl } from "helpers/isValidHttp";
 import { parseMilliseconds } from "helpers/msFormatter";
 import Image from "next/image";
@@ -42,7 +44,7 @@ const BrowsePage = ({ searchParams }: SearchParams) => {
   const [recipe, setRecipe] = React.useState<RootSchema | undefined>(recipeData?.results);
   const [onEdit, setOnEdit] = React.useState<boolean>(false);
 
-  const form = useForm<RootSchema>({ defaultValues: recipe });
+  const form = useForm<RootSchema>({ defaultValues: recipe, resolver: zodResolver(recipeSchema) });
 
   const router = useRouter();
   const { isAuthenticated } = useSession();

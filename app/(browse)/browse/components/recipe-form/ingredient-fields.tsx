@@ -6,17 +6,19 @@ import { RootSchema } from "types";
 import Wrapper from "./wrapper";
 
 type Props = {
-  ingredientRef: React.MutableRefObject<(HTMLLIElement | null)[]>;
   control: Control<RootSchema, any>;
   setValue: UseFormSetValue<RootSchema>;
   onEdit: {
     [key: string]: boolean;
   };
   getValues: UseFormGetValues<RootSchema>;
-  handleSubmit(data: RootSchema): void;
 };
 
-const IngredientFields: React.FunctionComponent<Props> = ({ ingredientRef, control, setValue, onEdit, getValues, handleSubmit }) => {
+type IngredientHandle = { remove: () => void };
+
+const IngredientFields = React.forwardRef<IngredientHandle, Props>(({ control, getValues, onEdit, setValue }, ref) => {
+  const ingredientRef = React.useRef<(HTMLLIElement | null)[]>([]);
+
   const { fields, append, removeLastEmptyField, handleOnEnter } = useRecipeFields({
     control,
     fieldRef: ingredientRef,
@@ -26,9 +28,11 @@ const IngredientFields: React.FunctionComponent<Props> = ({ ingredientRef, contr
     onEdit: onEdit.ingredients,
   });
 
-  React.useEffect(() => {
-    removeLastEmptyField();
-  }, [handleSubmit]);
+  React.useImperativeHandle(ref, () => ({
+    remove() {
+      removeLastEmptyField();
+    },
+  }));
 
   return (
     <Wrapper el="ul" aria-label="Ingredients">
@@ -55,6 +59,8 @@ const IngredientFields: React.FunctionComponent<Props> = ({ ingredientRef, contr
       </button>
     </Wrapper>
   );
-};
+});
+
+IngredientFields.displayName = "IngredientFields";
 
 export default IngredientFields;

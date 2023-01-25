@@ -1,8 +1,9 @@
+import ErrorMessage from "@components/form/error-message";
 import Input from "@components/form/input-field";
 import clsx from "clsx";
 import React from "react";
 import { Plus } from "react-feather";
-import { UseFormRegister } from "react-hook-form";
+import { FieldError, UseFormRegister } from "react-hook-form";
 import { RootSchema } from "types";
 
 import Wrapper from "./wrapper";
@@ -11,9 +12,10 @@ interface Props extends React.ComponentPropsWithoutRef<"input"> {
   onEditFields: { [key: string]: boolean };
   handleDescriptionToggle: () => void;
   register: UseFormRegister<RootSchema>;
+  errors: FieldError | undefined;
 }
 
-const Title: React.FunctionComponent<Props> = ({ onEditFields, handleDescriptionToggle, register }) => {
+const Title: React.FunctionComponent<Props> = ({ onEditFields, handleDescriptionToggle, register, errors }) => {
   return (
     <Wrapper aria-label="Title" className="mt-6">
       <div className="relative">
@@ -29,6 +31,7 @@ const Title: React.FunctionComponent<Props> = ({ onEditFields, handleDescription
           </span>
         </button>
       </div>
+      <ErrorMessage>{errors?.message}</ErrorMessage>
     </Wrapper>
   );
 };
