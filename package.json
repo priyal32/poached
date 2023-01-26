@@ -22,7 +22,7 @@
     "clsx": "^1.2.1",
     "cross-fetch": "^3.1.5",
     "crypto": "^1.0.1",
-    "eslint-plugin-simple-import-sort": "^8.0.0",
+    "eslint-plugin-simple-import-sort": "^9.0.0",
     "extract-domain": "^2.4.8",
     "jsonschema": "^1.4.1",
     "lodash": "^4.17.21",
