@@ -42,7 +42,7 @@ const IndexPage = async () => {
               Import just the recipe from any website without the distractions or clutter. Create meal plans, and generate grocery lists
             </p>
             <div className="mt-12 flex items-center justify-center gap-x-4">
-              <Link href="/signin" className="flex h-12 items-center gap-x-1.5 rounded-lg bg-[hsl(144,42%,47%)] px-2 md:px-4">
+              <Link prefetch={false} href="/signin" className="flex h-12 items-center gap-x-1.5 rounded-lg bg-[hsl(144,42%,47%)] px-2 md:px-4">
                 <span className="text-sm font-bold text-white md:text-lg">Get Started</span>
               </Link>
               <Link href={config.repo_url} target="_blank" className="flex h-12 items-center gap-x-1.5 rounded-lg border border-neutral-800 px-2 md:px-6">
