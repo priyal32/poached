@@ -21,11 +21,11 @@ const LoginPage = () => {
         <div className="flex flex-col space-y-2 text-center">
           <BsEggFried className="mx-auto h-6 w-6" />
           <h1 className="text-2xl font-bold">Welcome back</h1>
-          <p className="text-sm text-slate-100">Enter your credentials to sign in to your account</p>
+          <p className="text-sm text-[#bbb]">Enter your credentials to sign in to your account</p>
         </div>
         <UserAuthForm signingIn />
         <p className="px-8 text-center text-sm">
-          <Link href="/signup" className="underline hover:text-slate-500">
+          <Link href="/signup" className="text-[#7e7e7e] underline hover:text-[#bbb]">
             Don&apos;t have an account? Sign Up
           </Link>
         </p>

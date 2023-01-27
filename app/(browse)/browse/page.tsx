@@ -10,6 +10,7 @@ import { isValidHttpUrl } from "helpers/isValidHttp";
 import { parseMilliseconds } from "helpers/msFormatter";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
@@ -99,6 +100,7 @@ const BrowsePage = ({ searchParams }: SearchParams) => {
       <section className="relative m-auto flex h-full flex-col">
         {!isRequested && recipeData?.results && <Header {...importProps} setOnEdit={setOnEdit} />}
         <Container className="m-auto flex flex-col gap-y-8">
+          <span onClick={() => signOut()}>Sign out</span>
           {!targetUrl && !recipeData?.results && (
             <div className="m-auto flex max-w-xl flex-col items-center justify-center px-4 sm:px-0">
               <Image src="/poached_logo.png" alt="Poached Logo" width={150} height={150} className="relative mx-auto object-cover" />

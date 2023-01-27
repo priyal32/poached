@@ -29,6 +29,8 @@ module.exports = {
       },
       animation: {
         text: "text 5s ease infinite",
+        "slide-down-normal": "slideDownNormal 300ms cubic-bezier(0.87, 0, 0.13, 1)",
+        "slide-up-normal": "slideUpNormal 300ms cubic-bezier(0.87, 0, 0.13, 1)",
       },
       keyframes: {
         text: {
@@ -39,6 +41,17 @@ module.exports = {
           "50%": {
             "background-size": "200% 200%",
             "background-position": "right center",
+          },
+          slideDownNormal: {
+            "0%": { height: 0, opacity: 0 },
+            "100%": {
+              height: "inherit",
+              opacity: 1,
+            },
+          },
+          slideUpNormal: {
+            "0%": { height: "inherit", opacity: 1 },
+            "100%": { height: 0, opacity: 0 },
           },
         },
       },
