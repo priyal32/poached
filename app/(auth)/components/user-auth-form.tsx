@@ -2,8 +2,10 @@
 
 import LoadingDots from "@components/loading-dots/loading-dots";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useNotificationStore } from "@libs/stores/notification";
 import { userAuthSchema } from "@libs/validations/auth";
 import clsx from "clsx";
+import { nanoid } from "nanoid";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import * as React from "react";
@@ -19,6 +21,7 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
 type FormData = z.infer<typeof userAuthSchema>;
 
 export function UserAuthForm({ className, signingIn, ...props }: UserAuthFormProps) {
+  const { notification, setNotification } = useNotificationStore();
   const {
     register,
     handleSubmit,
@@ -31,7 +34,9 @@ export function UserAuthForm({ className, signingIn, ...props }: UserAuthFormPro
   const router = useRouter();
 
   async function onSubmit(data: FormData) {
+    const toastId = nanoid();
     setIsLoading(true);
+    setNotification({ id: toastId, category: "loading", message: "Signing in..." });
 
     const signInResult = await signIn("credentials", {
       username: data.username.toLowerCase(),
@@ -42,10 +47,11 @@ export function UserAuthForm({ className, signingIn, ...props }: UserAuthFormPro
     });
 
     if (signInResult?.error) {
-      console.log("Failed...");
       setIsLoading(false);
+      setNotification({ id: toastId, category: "error", message: signInResult.error, error: signInResult.error });
     } else {
       React.startTransition(() => {
+        setNotification({ id: toastId, category: "success", message: "Signed in successfully" });
         router.push("/browse");
         router.refresh();
       });
@@ -78,7 +84,7 @@ export function UserAuthForm({ className, signingIn, ...props }: UserAuthFormPro
           <div className="flex flex-col gap-4">
             <div className="grid gap-2 text-sm md:grid md:grid-cols-12 md:gap-x-4">
               <div className="col-span-12 flex flex-row justify-between space-x-2">
-                <label className="block break-all text-sm text-[#bbb]" htmlFor="Username">
+                <label onClick={() => console.log(notification)} className="block break-all text-sm text-[#bbb]" htmlFor="Username">
                   Username
                 </label>
               </div>
