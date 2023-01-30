@@ -8,7 +8,7 @@ interface Props extends React.ComponentPropsWithoutRef<"input"> {
 const Input = React.forwardRef<HTMLInputElement, Props>(({ className = "", ...rest }, ref) => {
   return (
     <div className="relative flex w-full flex-col rounded-md bg-dark-2">
-      <input {...rest} className={clsx("h-10 rounded-md bg-transparent p-2 text-sm focus:outline-none", className)} ref={ref} />
+      <input {...rest} className={clsx("h-10 rounded-md bg-transparent p-2 text-sm placeholder:text-slate-900 focus:outline-none", className)} ref={ref} />
     </div>
   );
 });

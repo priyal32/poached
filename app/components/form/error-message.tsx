@@ -8,7 +8,7 @@ interface Props extends React.ComponentPropsWithoutRef<"span"> {
 
 const ErrorMessage = React.forwardRef<HTMLSpanElement, Props>(({ className = "", children, ...rest }, ref) => {
   return (
-    <span {...rest} className={clsx("mt-0.5 text-xs text-red-500", className)} ref={ref}>
+    <span {...rest} className={clsx("mt-0.5 text-xs text-red-800", className)} ref={ref}>
       {children}
     </span>
   );

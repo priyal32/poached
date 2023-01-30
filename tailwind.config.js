@@ -2,10 +2,112 @@
 /* eslint-disable no-undef */
 /** @type {import('tailwindcss').Config} */
 const defaultTheme = require("tailwindcss/defaultTheme");
+const radixUiColors = require("@radix-ui/colors");
+const brandColors = require("./config/default-colors");
+
+const fixedColors = ["main", "mainA", "brand"];
+
+function radixColorKeys() {
+  let keys = Object.keys(radixUiColors);
+
+  function filterItems(arr, query) {
+    return arr.filter((el) => el.toLowerCase().indexOf(query.toLowerCase()) == -1);
+  }
+
+  keys = filterItems(keys, "Dark");
+
+  return keys;
+}
+
+function generateColorClasses() {
+  const brandColors = ["brand", "main", "mainA"];
+  const colors = [...radixColorKeys(), ...brandColors];
+
+  let mappedColors = {};
+
+  colors.map((x) => {
+    mappedColors[x] = {};
+    if (
+      fixedColors.some(function (v) {
+        return x.indexOf(v) >= 0;
+      })
+    ) {
+      mappedColors[`${x}-fixed`] = {};
+    }
+  });
+
+  colors.map((x) => {
+    for (let index = 0; index < 12; index++) {
+      const step = index + 1;
+      mappedColors[x][step * 100] = `var(--colors-${x}${step})`;
+
+      if (
+        fixedColors.some(function (v) {
+          return x.indexOf(v) >= 0;
+        })
+      ) {
+        mappedColors[`${x}-fixed`][step * 100] = `var(--colors-fixed-${x}${step})`;
+      }
+    }
+  });
+
+  return mappedColors;
+}
+
+const colorClasses = generateColorClasses();
+
+function generateCssVariables() {
+  let rootColors = {};
+  let darkColors = {};
+
+  const radixArray = Object.values(radixUiColors);
+  const brandArray = Object.values(brandColors);
+
+  function generateColors(colors, index, colorSet) {
+    const key = Object.keys(colorSet)[index];
+
+    if (key.includes("Dark")) {
+      darkColors = { ...darkColors, ...colors };
+    } else {
+      rootColors = { ...rootColors, ...colors };
+
+      // generate an optional 'fixed' scale of colors
+      if (
+        fixedColors.some(function (v) {
+          return key.indexOf(v) >= 0;
+        })
+      ) {
+        rootColors.fixed = { ...rootColors?.fixed, ...colors };
+      }
+    }
+  }
+
+  radixArray.map((x, i) => {
+    generateColors(x, i, radixUiColors);
+  });
+
+  brandArray.map((x, i) => {
+    generateColors(x, i, brandColors);
+  });
+
+  return {
+    root: { ...rootColors },
+    dark: { ...darkColors },
+  };
+}
+
+const variables = generateCssVariables();
+console.log(variables.dark);
 
 module.exports = {
+  darkMode: "class",
   content: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}", "./app/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    variables: {
+      DEFAULT: {
+        colors: { ...variables.dark },
+      },
+    },
     screens: {
       xs: "475px",
       ...defaultTheme.screens,
@@ -19,6 +121,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        ...colorClasses,
         "dark-1": "#202123",
         "dark-2": "#171819",
         "dark-neutral": "#2a2b2d",
@@ -57,5 +160,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@mertasan/tailwindcss-variables")],
 };

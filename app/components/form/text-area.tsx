@@ -8,7 +8,7 @@ interface Props extends React.ComponentPropsWithoutRef<"textarea"> {
 const Textarea = React.forwardRef<HTMLTextAreaElement, Props>(({ className = "", ...rest }, ref) => {
   return (
     <div className="relative flex h-full w-full flex-col rounded-md bg-dark-2">
-      <textarea {...rest} className={clsx("h-full w-full resize-none overflow-auto rounded-md bg-transparent p-2 text-sm focus:outline-none", className)} ref={ref} />
+      <textarea {...rest} className={clsx("h-full w-full resize-none overflow-auto rounded-md bg-transparent p-2 text-sm placeholder:text-slate-900 focus:outline-none", className)} ref={ref} />
     </div>
   );
 });

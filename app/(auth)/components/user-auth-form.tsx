@@ -76,7 +76,7 @@ export function UserAuthForm({ className, signingIn, ...props }: UserAuthFormPro
             <div className="w-full border-t border-[#3e3e3e]"></div>
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-dark-2 px-2 text-slate-100">or</span>
+            <span className="bg-dark-2 px-2 text-slate-1200">or</span>
           </div>
         </div>
 
@@ -84,7 +84,7 @@ export function UserAuthForm({ className, signingIn, ...props }: UserAuthFormPro
           <div className="flex flex-col gap-4">
             <div className="grid gap-2 text-sm md:grid md:grid-cols-12 md:gap-x-4">
               <div className="col-span-12 flex flex-row justify-between space-x-2">
-                <label onClick={() => console.log(notification)} className="block break-all text-sm text-[#bbb]" htmlFor="Username">
+                <label onClick={() => console.log(notification)} className="block break-all text-sm text-main-1100" htmlFor="Username">
                   Username
                 </label>
               </div>
@@ -94,12 +94,10 @@ export function UserAuthForm({ className, signingIn, ...props }: UserAuthFormPro
                   placeholder="John Doe"
                   className={clsx(
                     "box-border block w-full rounded-md border",
-                    "px-4 py-2 text-sm text-[#ededed] shadow-sm outline-none transition-all",
+                    "px-4 py-2 text-sm text-main-1200 shadow-sm outline-none transition-all",
                     "focus:border-neutral-600 focus:shadow-md",
                     "focus:outline-none focus:ring-2",
-                    errors?.username?.message
-                      ? "border-[#822025] bg-[#1f1315] placeholder:text-[#671e22] focus:ring-[#541b1f]"
-                      : "border-[#3e3e3e] bg-[hsla(0,0%,100%,0.026)] placeholder:text-[#505050] hover:border-neutral-600 focus:ring-[#282828]",
+                    errors?.username?.message ? "border-red-700 bg-red-100 placeholder:text-red-600 focus:ring-red-500" : "border-main-700 bg-mainA-200 placeholder:text-main-800 focus:ring-main-400",
                   )}
                   type="text"
                   autoCapitalize="none"
@@ -109,7 +107,7 @@ export function UserAuthForm({ className, signingIn, ...props }: UserAuthFormPro
                 />
                 <p
                   data-state={!!errors?.username?.message}
-                  className="text-sm text-[#e5484d] transition-all data-[state=true]:mt-2 data-[state=false]:animate-slide-up-normal data-[state=true]:animate-slide-down-normal"
+                  className="text-sm text-red-900 transition-all data-[state=true]:mt-2 data-[state=false]:animate-slide-up-normal data-[state=true]:animate-slide-down-normal"
                 >
                   {errors?.username?.message}
                 </p>
@@ -117,7 +115,7 @@ export function UserAuthForm({ className, signingIn, ...props }: UserAuthFormPro
             </div>
             <div className="grid gap-2 text-sm md:grid md:grid-cols-12 md:gap-x-4">
               <div className="col-span-12 flex flex-row justify-between space-x-2">
-                <label className="block break-all text-sm text-[#bbb]" htmlFor="Password">
+                <label className="block break-all text-sm text-main-1100" htmlFor="Password">
                   Password
                 </label>
               </div>
@@ -127,12 +125,10 @@ export function UserAuthForm({ className, signingIn, ...props }: UserAuthFormPro
                   placeholder="••••••••"
                   className={clsx(
                     "box-border block w-full rounded-md border",
-                    "px-4 py-2 text-sm text-[#ededed] shadow-sm outline-none transition-all",
+                    "px-4 py-2 text-sm text-main-1200 shadow-sm outline-none transition-all",
                     "focus:border-neutral-600 focus:shadow-md",
                     "focus:outline-none focus:ring-2",
-                    errors?.password?.message
-                      ? "border-[#822025] bg-[#1f1315] placeholder:text-[#671e22] focus:ring-[#541b1f]"
-                      : "border-[#3e3e3e] bg-[hsla(0,0%,100%,0.026)] placeholder:text-[#505050] hover:border-neutral-600 focus:ring-[#282828]",
+                    errors?.password?.message ? "border-red-700 bg-red-100 placeholder:text-red-600 focus:ring-red-500" : "border-main-700 bg-mainA-200 placeholder:text-main-800 focus:ring-main-400",
                   )}
                   type="password"
                   disabled={isLoading}
@@ -140,7 +136,7 @@ export function UserAuthForm({ className, signingIn, ...props }: UserAuthFormPro
                 />
                 <p
                   data-state={!!errors?.password?.message}
-                  className="text-sm text-[#e5484d] transition-all data-[state=true]:mt-2 data-[state=false]:animate-slide-up-normal data-[state=true]:animate-slide-down-normal"
+                  className="text-sm text-red-900 transition-all data-[state=true]:mt-2 data-[state=false]:animate-slide-up-normal data-[state=true]:animate-slide-down-normal"
                 >
                   {errors?.password?.message}
                 </p>

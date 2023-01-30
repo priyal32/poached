@@ -36,7 +36,7 @@ const IndexPage = async () => {
       <div className="flex w-full flex-col items-center">
         <section className="max-w-5xl px-6  md:px-0">
           <div className="mx-auto max-w-4xl pt-16 md:pt-28 lg:pt-36">
-            <h2 className="text-center font-headline text-lg font-bold text-[hsl(144,42%,47%)]">The home for all your recipes</h2>
+            <h2 className="text-center font-headline text-lg font-bold text-brand-900">The home for all your recipes</h2>
             <h1 className="text-center font-headline text-4xl font-bold md:text-7xl">All your recipes in one single page.</h1>
             <p className="mx-auto mt-8 max-w-3xl text-center font-primary text-base md:mt-12 md:text-xl">
               Import just the recipe from any website without the distractions or clutter. Create meal plans, and generate grocery lists
@@ -58,7 +58,7 @@ const IndexPage = async () => {
         </div>
         <section className="w-full max-w-5xl px-6  md:px-0">
           <h3 className="mx-auto max-w-[80%] pt-8 pb-4 text-center font-headline text-3xl font-bold md:text-5xl">Simple enough for anyone, Powerful enough for anything.</h3>
-          <p className="mx-auto max-w-3xl text-center font-primary text-base text-slate-200 md:text-lg">
+          <p className="mx-auto max-w-3xl text-center font-primary text-base text-slate-1100 md:text-lg">
             Poached will help you to streamline your cooking process, allowing you to quickly and efficiently organize your recipe collection.
           </p>
           <ul className="grid w-full grid-cols-1 gap-8 pt-12 md:grid-cols-3">
@@ -82,7 +82,7 @@ const IndexPage = async () => {
         <section className="mt-8 flex w-full flex-col items-center py-8 md:py-12 lg:py-24">
           <div className="mx-auto flex max-w-5xl flex-col gap-y-4">
             <h3 className="text-center font-headline text-3xl font-bold leading-[1.1] tracking-tighter sm:text-3xl md:text-6xl">Proudly Open Source</h3>
-            <p className="mx-auto max-w-[85%] text-center leading-normal text-neutral-50 sm:text-lg sm:leading-7">
+            <p className="mx-auto max-w-[85%] text-center leading-normal text-slate-1100 sm:text-lg sm:leading-7">
               Poached is open source and powered by open source software. The code is available on{" "}
               <Link className="underline" href={config.repo_url}>
                 Github
@@ -90,12 +90,12 @@ const IndexPage = async () => {
               .
             </p>
             <Link className="mx-auto flex items-center" href={config.repo_url}>
-              <div className="rounded-md bg-slate-800/60 p-3">
+              <div className="bg-slate-800/60 rounded-md p-3">
                 <BsGithub className="h-6 w-6" />
               </div>
               <div className="flex items-center">
-                <div className="h-4 w-4 border-y-8 border-r-8 border-l-0 border-solid border-y-transparent border-r-slate-800"></div>
-                <div className="flex h-10 items-center rounded-md border border-slate-800/60 bg-slate-800/60 px-4 font-headline font-medium text-slate-200">{stars} stars on GitHub</div>
+                <div className="h-4 w-4 border-y-8 border-r-8 border-l-0 border-solid border-y-transparent border-r-slate-500"></div>
+                <div className="flex h-10 items-center rounded-md border border-slate-500 bg-slate-500 px-4 font-headline font-medium text-slate-1100">{stars} stars on GitHub</div>
               </div>
             </Link>
           </div>

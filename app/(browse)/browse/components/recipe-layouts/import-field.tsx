@@ -25,7 +25,7 @@ const ImportField: React.FunctionComponent<Props> = ({ handleSubmitForm, setValu
         id="urlKeyword"
         autoComplete="off"
         value={value || ""}
-        className="h-full w-[calc(100%-75px)] rounded-lg bg-transparent pl-4 text-sm focus:outline-none md:pl-12"
+        className="h-full w-[calc(100%-75px)] rounded-lg bg-transparent pl-4 text-sm placeholder:text-slate-900 focus:outline-none md:pl-12"
         placeholder={placeHolder}
       />
       <button
