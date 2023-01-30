@@ -49,6 +49,7 @@
     "zustand": "^4.3.2"
   },
   "devDependencies": {
+    "@mertasan/tailwindcss-variables": "^2.5.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@types/body-scroll-lock": "^3.1.0",
