@@ -118,7 +118,11 @@
   }
 }
 
-html {
+html,
+body,
+#__next,
+.main {
+  height: 100%;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
   tab-size: 4;
