@@ -2,8 +2,10 @@ import ErrorMessage from "@components/form/error-message";
 import Input from "@components/form/input-field";
 import interpretDuration from "@helpers/interpretDuration";
 import { parseMilliseconds } from "@helpers/msFormatter";
+import { useNotificationStore } from "@libs/stores/notification";
+import { nanoid } from "nanoid";
 import React from "react";
-import { UseFormReturn } from "react-hook-form";
+import { SubmitErrorHandler, SubmitHandler, UseFormReturn } from "react-hook-form";
 import { RootSchema } from "types";
 
 import CooktimeFields from "./cooktime-fields";
@@ -33,6 +35,7 @@ type IngredientHandle = React.ElementRef<typeof IngredientFields>;
 type InstructionHandle = React.ElementRef<typeof InstructionFields>;
 
 const RecipeForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, handleCloseEdit }) => {
+  const { setNotification } = useNotificationStore();
   const initialEdit = {
     description: recipe?.description ? (recipe?.description ? true : false) : false,
     ingredients: false,
@@ -74,7 +77,7 @@ const RecipeForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, hand
     return Number(interpretDuration(str).toMilliseconds());
   }
 
-  function handleSubmit(data: RootSchema) {
+  const onSubmit: SubmitHandler<RootSchema> = (data) => {
     instructionElement.current?.remove();
     ingredientElement.current?.remove();
 
@@ -91,14 +94,19 @@ const RecipeForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, hand
     setRecipe(newData);
     form.reset(newData);
     handleCloseEdit();
-  }
+  };
+
+  const onSubmitError: SubmitErrorHandler<RootSchema> = () => {
+    const toastId = nanoid();
+    setNotification({ id: toastId, category: "error", message: "Please fill the required field" });
+  };
 
   React.useEffect(() => {
     setOnEditFields(initialEdit);
   }, [recipeData]);
 
   return (
-    <form onSubmit={form.handleSubmit((data) => handleSubmit(data))} className="flex h-full flex-col justify-between">
+    <form onSubmit={form.handleSubmit(onSubmit, onSubmitError)} className="flex h-full flex-col justify-between">
       <div className="flex flex-col px-4 pb-8">
         <div className="border-b border-b-dark-neutral">
           <h1 className="mb-2 pb-2 font-headline text-2xl font-bold">Edit recipe</h1>

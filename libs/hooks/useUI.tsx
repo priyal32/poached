@@ -1,5 +1,6 @@
 "use client";
 
+import config from "@libs/config";
 import { useNotificationStore } from "@libs/stores/notification";
 import React from "react";
 import { toast } from "react-hot-toast";
@@ -17,7 +18,7 @@ const useUI = () => {
       case "success":
         return toast.success(message, { id, duration: toastDuration });
       case "error":
-        console.error("Error: ", error);
+        !config.is_production && console.error("Error: ", error);
         return toast.error(message, { id, duration: toastDuration || Infinity });
       case "loading":
         if (progress !== undefined) {
