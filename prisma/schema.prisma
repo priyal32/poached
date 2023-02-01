@@ -65,3 +65,61 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model Recipe {
+  id                      String               @id @default(cuid())
+  createdAt               DateTime             @default(now())
+  convertedCooktimes      ConvertedCooktimes[]
+  cookTime                String               @db.VarChar(30)
+  cookTimeOriginalFormat  String
+  cookTimes               CookTimes[]
+  image                   String               @db.VarChar(512)
+  name                    String               @db.VarChar(100)
+  prepTime                String               @db.VarChar(30)
+  prepTimeOriginalFormat  String               @db.VarChar(50)
+  recipeIngredients       RecipeIngredients[]
+  recipeInstructions      RecipeInstructions[]
+  recipeYield             Int
+  totalTime               String               @db.VarChar(30)
+  totalTimeOriginalFormat String               @db.VarChar(50)
+  url                     String               @db.VarChar(512)
+}
+
+model ConvertedCooktimes {
+  id       Int     @id @default(autoincrement())
+  type     String
+  value    Int
+  Recipe   Recipe? @relation(fields: [recipeId], references: [id])
+  recipeId String?
+
+  @@index([recipeId])
+}
+
+model CookTimes {
+  id       Int     @id @default(autoincrement())
+  type     String
+  hr       String
+  min      String
+  Recipe   Recipe? @relation(fields: [recipeId], references: [id])
+  recipeId String?
+
+  @@index([recipeId])
+}
+
+model RecipeIngredients {
+  id       Int     @id
+  item     String
+  Recipe   Recipe? @relation(fields: [recipeId], references: [id])
+  recipeId String?
+
+  @@index([recipeId])
+}
+
+model RecipeInstructions {
+  id       Int     @id
+  item     String
+  Recipe   Recipe? @relation(fields: [recipeId], references: [id])
+  recipeId String?
+
+  @@index([recipeId])
+}
