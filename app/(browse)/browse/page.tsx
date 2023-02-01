@@ -100,7 +100,9 @@ const BrowsePage = ({ searchParams }: SearchParams) => {
       <section className="relative m-auto flex h-full flex-col">
         {!isRequested && recipeData?.results && <Header {...importProps} setOnEdit={setOnEdit} />}
         <Container className="m-auto flex flex-col gap-y-8">
-          <span onClick={() => signOut()}>Sign out</span>
+          <span className="text-sm" onClick={() => signOut()}>
+            Sign out
+          </span>
           {!targetUrl && !recipeData?.results && (
             <div className="m-auto flex max-w-xl flex-col items-center justify-center px-4 sm:px-0">
               <Image src="/poached_logo.png" alt="Poached Logo" width={150} height={150} className="relative mx-auto object-cover" />
@@ -109,7 +111,7 @@ const BrowsePage = ({ searchParams }: SearchParams) => {
             </div>
           )}
           {isRequested && targetUrl && <RecipeOnLoading />}
-          {!isRequested && targetUrl && recipe && <RecipeLayout data={recipe} />}
+          {!isRequested && targetUrl && recipeData?.results && recipe && <RecipeLayout data={recipe} />}
           {!isRequested && targetUrl && !recipeData?.results && <RecipeUndefined {...importProps} />}
         </Container>
         {recipe && onEdit && (
