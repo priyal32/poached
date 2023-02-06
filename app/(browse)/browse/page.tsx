@@ -106,7 +106,7 @@ const BrowsePage = ({ searchParams }: SearchParams) => {
   async function onSave() {
     if (!recipe) return;
     setNotification({ id: toastId, category: "loading", message: "Saving recipe" });
-    await sendRequest("/api/recipe", recipe);
+    await sendRequest(`/api/recipe`, recipe);
   }
 
   function handleCloseEdit() {
