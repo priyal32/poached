@@ -4,6 +4,7 @@ import Container from "@components/container";
 import SidebarLayout from "@components/sidebar/sidebar-layout";
 import Sidebar from "@components/sidebar/sidebar-main";
 import { zodResolver } from "@hookform/resolvers/zod";
+import config from "@libs/config";
 import { useNotificationStore } from "@libs/stores/notification";
 import { useSession } from "@libs/use-session-rq";
 import { recipeSchema } from "@libs/validations/recipe";
@@ -106,7 +107,7 @@ const BrowsePage = ({ searchParams }: SearchParams) => {
   async function onSave() {
     if (!recipe) return;
     setNotification({ id: toastId, category: "loading", message: "Saving recipe" });
-    await sendRequest("/api/recipe", recipe);
+    await sendRequest(`${config.url}/api/recipe`, recipe);
   }
 
   function handleCloseEdit() {
