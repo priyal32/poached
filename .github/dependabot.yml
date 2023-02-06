@@ -8,8 +8,9 @@ updates:
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
-      interval: "weekly"
-    rebase-strategy: "disabled"
+      interval: "daily"
     reviewers:
       - "arcetros"
-    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "automerge"
