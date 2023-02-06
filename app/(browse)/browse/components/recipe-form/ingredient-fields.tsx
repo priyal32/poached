@@ -44,7 +44,7 @@ const IngredientFields = React.forwardRef<IngredientHandle, Props>(({ control, g
           contentEditable
           onInput={(event) => {
             setValue(`recipeIngredients.${id}`, {
-              id,
+              id: ingredient.id,
               item: event.currentTarget.textContent as string,
             });
           }}

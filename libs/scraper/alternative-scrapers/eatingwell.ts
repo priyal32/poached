@@ -1,4 +1,5 @@
 import * as cheerio from "cheerio";
+import { nanoid } from "nanoid";
 import { RootSchema } from "types";
 
 import { Recipe } from "../Recipe";
@@ -7,6 +8,7 @@ import validateRecipe from "../validateRecipe";
 
 export default function eatingWell(html: string) {
   const $ = cheerio.load(html);
+  const recipeId = nanoid();
   const recipe: RootSchema = new (Recipe as any)();
 
   const recipeInfoSection = ".recipe-info-section > .recipe-meta-container > div > .recipe-meta-item";
@@ -17,12 +19,12 @@ export default function eatingWell(html: string) {
 
   $(".ingredients-section > li > label > span > .ingredients-item-name").each((id, el) => {
     const item = $(el).text().replace(/\s\s+/g, " ").trim();
-    recipe.recipeIngredients?.push({ id, item });
+    recipe.recipeIngredients?.push({ id: recipeId, item });
   });
 
   $(".instructions-section > li > .section-body > div > p").each((id, el) => {
     const item = $(el).text().replace(/\s\s+/g, " ").trim();
-    recipe.recipeInstructions?.push({ id, item });
+    recipe.recipeInstructions?.push({ id: recipeId, item });
   });
 
   $(".recipe-info-section > .nutrition-profile > ul > li > a").each((_, el) => {

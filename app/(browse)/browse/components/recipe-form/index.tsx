@@ -77,6 +77,8 @@ const RecipeForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, hand
     return Number(interpretDuration(str).toMilliseconds());
   }
 
+  const toastId = nanoid();
+
   const onSubmit: SubmitHandler<RootSchema> = (data) => {
     instructionElement.current?.remove();
     ingredientElement.current?.remove();
@@ -84,10 +86,10 @@ const RecipeForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, hand
     const sanitizedIngredients = data.recipeIngredients.filter((o) => o.item !== "");
     const sanitizedInstructions = data.recipeInstructions?.filter((o) => o.item !== "");
     const convertCookTimes = data?.cookTimes?.map((time) => {
-      return { type: time.type, value: handleMiliseconds(`${time.hr} hour`) + handleMiliseconds(`${time.min} minute`) };
+      return { id: time.id, type: time.type, value: handleMiliseconds(`${time.hr} hour`) + handleMiliseconds(`${time.min} minute`) };
     });
     const normalizeParsedCookTimes = convertCookTimes?.map((time) => {
-      return { type: time.type, hr: parseMilliseconds(time.value).hours.toString(), min: parseMilliseconds(time.value).minutes.toString() };
+      return { id: time.id, type: time.type, hr: parseMilliseconds(time.value).hours.toString(), min: parseMilliseconds(time.value).minutes.toString() };
     });
 
     const newData = { ...data, recipeIngredients: sanitizedIngredients, recipeInstructions: sanitizedInstructions, convertedCookTimes: convertCookTimes, cookTimes: normalizeParsedCookTimes };
@@ -96,8 +98,8 @@ const RecipeForm: React.FC<Props> = ({ recipe, setRecipe, form, recipeData, hand
     handleCloseEdit();
   };
 
-  const onSubmitError: SubmitErrorHandler<RootSchema> = () => {
-    const toastId = nanoid();
+  const onSubmitError: SubmitErrorHandler<RootSchema> = (data) => {
+    console.log(data);
     setNotification({ id: toastId, category: "error", message: "Please fill the required field" });
   };
 

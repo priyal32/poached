@@ -1,4 +1,5 @@
 import * as cheerio from "cheerio";
+import { nanoid } from "nanoid";
 import { RootSchema } from "types";
 
 import { Recipe } from "../Recipe";
@@ -6,6 +7,7 @@ import { getDescriptionFromSelector, getImageFromSelector } from "../selectors";
 import validateRecipe from "../validateRecipe";
 
 export default function allrecipes(html: string) {
+  const recipeId = nanoid();
   const $ = cheerio.load(html);
   const recipe: RootSchema = new (Recipe as any)();
 
@@ -16,12 +18,12 @@ export default function allrecipes(html: string) {
 
   $(".mntl-structured-ingredients__list > li > p").each((id, el) => {
     const ingredient = $(el).text().replace(/\s\s+/g, " ").trim();
-    recipe.recipeIngredients?.push({ id, item: ingredient });
+    recipe.recipeIngredients?.push({ id: recipeId, item: ingredient });
   });
 
   $("#recipe__steps-content_1-0 > #mntl-sc-block_2-0 > li > p").each((id, el) => {
     const item = $(el).text().replace(/\s\s+/g, " ").trim();
-    recipe.recipeInstructions?.push({ id, item });
+    recipe.recipeInstructions?.push({ id: recipeId, item });
   });
 
   recipe.prepTime = $('.mntl-recipe-details__item div:contains("Prep Time:")').next().text();

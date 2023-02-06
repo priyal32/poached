@@ -46,8 +46,9 @@ export function UserAuthForm({ className, signingIn, ...props }: UserAuthFormPro
     setShowHiddenPassword((prev) => !prev);
   }
 
+  const toastId = nanoid();
+
   async function onSubmit(data: FormData) {
-    const toastId = nanoid();
     setIsLoading(true);
     setNotification({ id: toastId, category: "loading", message: "Signing in..." });
 

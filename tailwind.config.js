@@ -97,7 +97,6 @@ function generateCssVariables() {
 }
 
 const variables = generateCssVariables();
-console.log(variables.dark);
 
 module.exports = {
   darkMode: "class",

@@ -4,10 +4,12 @@ import Container from "@components/container";
 import SidebarLayout from "@components/sidebar/sidebar-layout";
 import Sidebar from "@components/sidebar/sidebar-main";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useNotificationStore } from "@libs/stores/notification";
 import { useSession } from "@libs/use-session-rq";
 import { recipeSchema } from "@libs/validations/recipe";
+import { fetchWithUser } from "app/libs/fetch-with-user";
 import { isValidHttpUrl } from "helpers/isValidHttp";
-import { parseMilliseconds } from "helpers/msFormatter";
+import { nanoid } from "nanoid";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
@@ -34,7 +36,10 @@ type SearchParams = {
   searchParams?: { url: string };
 };
 
+const toastId = nanoid();
+
 const BrowsePage = ({ searchParams }: SearchParams) => {
+  const { setNotification } = useNotificationStore();
   const [value, setValue] = React.useState<string>("");
   const [targetUrl, setTargetUrl] = React.useState<string>(searchParams?.url || "");
 
@@ -64,13 +69,8 @@ const BrowsePage = ({ searchParams }: SearchParams) => {
 
     const recipe: Result = await response.json();
     setValue("");
-    const parsedCookTimes = recipe.results?.convertedCookTimes?.map((time) => {
-      return { type: time.type, hr: parseMilliseconds(time.value).hours.toString(), min: parseMilliseconds(time.value).minutes.toString() };
-    });
-
-    setRecipe({ ...recipe.results, cookTimes: parsedCookTimes });
-
-    form.reset({ ...recipe.results, cookTimes: parsedCookTimes });
+    setRecipe(recipe.results);
+    form.reset(recipe.results);
     return recipe;
   }
 
@@ -78,11 +78,35 @@ const BrowsePage = ({ searchParams }: SearchParams) => {
     event.preventDefault();
     const query: { url: string } = { url: value };
     if (!value || !isValidHttpUrl(query.url)) {
-      return alert("Make sure you entered valid url");
+      return setNotification({ id: toastId, category: "error", message: "Make sure to enter correct url" });
     }
     setTargetUrl(value);
 
     //TODO : router push with query parameter, without encoding.
+  }
+
+  const sendRequest = React.useCallback(async (url: string, data: RootSchema) => {
+    const res = await fetchWithUser(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...data, recipeYield: Number(data.recipeYield) }),
+    });
+
+    if (res.ok) {
+      setNotification({ id: toastId, category: "success", message: "Your changes are saved successfully" });
+    } else {
+      const json = await res.json();
+      console.log(json);
+      setNotification({ id: toastId, category: "error", message: "An error while saving changes" });
+    }
+  }, []);
+
+  async function onSave() {
+    if (!recipe) return;
+    setNotification({ id: toastId, category: "loading", message: "Saving recipe" });
+    await sendRequest("/api/recipe", recipe);
   }
 
   function handleCloseEdit() {
@@ -98,7 +122,7 @@ const BrowsePage = ({ searchParams }: SearchParams) => {
   return (
     <div className="h-screen w-full overflow-auto pt-[80px] md:pl-[15rem] md:pt-0">
       <section className="relative m-auto flex h-full flex-col">
-        {!isRequested && recipeData?.results && <Header {...importProps} setOnEdit={setOnEdit} />}
+        {!isRequested && recipeData?.results && <Header {...importProps} onSave={onSave} setOnEdit={setOnEdit} />}
         <Container className="m-auto flex flex-col gap-y-8">
           <span className="text-sm" onClick={() => signOut()}>
             Sign out

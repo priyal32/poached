@@ -16,13 +16,13 @@ model Account {
   type                     String
   provider                 String
   providerAccountId        String
-  refresh_token            String?  @db.VarChar(500)
-  access_token             String?  @db.VarChar(500)
+  refresh_token            String?
+  access_token             String?
   refresh_token_expires_in Int?
   expires_at               Int?
   token_type               String?
   scope                    String?
-  id_token                 String?  @db.Text
+  id_token                 String?  @db.Text()
   session_state            String?
   oauth_token_secret       String?
   oauth_token              String?
@@ -50,6 +50,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  recipes       Recipe[]
   role          String?   @default("user")
   displayName   String?
   accounts      Account[]
@@ -70,56 +71,53 @@ model Recipe {
   id                      String               @id @default(cuid())
   createdAt               DateTime             @default(now())
   convertedCooktimes      ConvertedCooktimes[]
-  cookTime                String               @db.VarChar(30)
-  cookTimeOriginalFormat  String
-  cookTimes               CookTimes[]
-  image                   String               @db.VarChar(512)
-  name                    String               @db.VarChar(100)
-  prepTime                String               @db.VarChar(30)
-  prepTimeOriginalFormat  String               @db.VarChar(50)
+  cookTime                String?
+  cookTimeOriginalFormat  String?
+  image                   String?
+  name                    String
+  prepTime                String?
+  description             String?              @db.Text()
+  prepTimeOriginalFormat  String?
   recipeIngredients       RecipeIngredients[]
   recipeInstructions      RecipeInstructions[]
-  recipeYield             Int
-  totalTime               String               @db.VarChar(30)
-  totalTimeOriginalFormat String               @db.VarChar(50)
-  url                     String               @db.VarChar(512)
+  recipeYield             Int?
+  totalTime               String?
+  totalTimeOriginalFormat String?
+  url                     String?
+  User                    User?                @relation(fields: [userId], references: [id])
+  userId                  String?
+
+  @@unique([id])
+  @@index([userId])
 }
 
 model ConvertedCooktimes {
-  id       Int     @id @default(autoincrement())
+  id       String
   type     String
   value    Int
   Recipe   Recipe? @relation(fields: [recipeId], references: [id])
   recipeId String?
 
-  @@index([recipeId])
-}
-
-model CookTimes {
-  id       Int     @id @default(autoincrement())
-  type     String
-  hr       String
-  min      String
-  Recipe   Recipe? @relation(fields: [recipeId], references: [id])
-  recipeId String?
-
+  @@unique([id])
   @@index([recipeId])
 }
 
 model RecipeIngredients {
-  id       Int     @id
-  item     String
+  id       String
+  item     String  @db.Text()
   Recipe   Recipe? @relation(fields: [recipeId], references: [id])
   recipeId String?
 
+  @@unique([id])
   @@index([recipeId])
 }
 
 model RecipeInstructions {
-  id       Int     @id
-  item     String
+  id       String
+  item     String  @db.Text()
   Recipe   Recipe? @relation(fields: [recipeId], references: [id])
   recipeId String?
 
+  @@unique([id])
   @@index([recipeId])
 }

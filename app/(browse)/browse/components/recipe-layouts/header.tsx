@@ -10,16 +10,17 @@ type RecipeHeader = {
   setValue: (value: React.SetStateAction<string>) => void;
   value?: string;
   isRequested: boolean;
+  onSave(): Promise<void>;
 };
 
-const Header: React.FunctionComponent<RecipeHeader> = ({ handleSubmitForm, isRequested, setValue, setOnEdit, value }) => {
+const Header: React.FunctionComponent<RecipeHeader> = ({ handleSubmitForm, isRequested, setValue, setOnEdit, value, onSave }) => {
   const [showItems, setShowItems] = React.useState<boolean>(false);
   const handleOnEdit = () => setOnEdit((prev) => !prev);
 
   const ACTIONS = [
     { label: "Edit", action: handleOnEdit, icon: <FiEdit className="h-5 w-5" /> },
     { label: "Share", action: null, icon: <FiShare2 className="h-5 w-5" /> },
-    { label: "Save", action: null, icon: <FiPlus className="h-5 w-5" /> },
+    { label: "Save", action: onSave, icon: <FiPlus className="h-5 w-5" /> },
   ];
 
   return (

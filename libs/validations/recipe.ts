@@ -12,7 +12,7 @@ const recipeShape: ZodShape<RootSchema> = {
   image: z.string().optional(),
   recipeIngredients: z.array(
     z.object({
-      id: z.number(),
+      id: z.string(),
       item: z.string(),
     }),
   ),
@@ -26,7 +26,7 @@ const recipeShape: ZodShape<RootSchema> = {
   recipeInstructions: z
     .array(
       z.object({
-        id: z.number(),
+        id: z.string(),
         item: z.string(),
       }),
     )
@@ -34,6 +34,7 @@ const recipeShape: ZodShape<RootSchema> = {
   convertedCookTimes: z
     .array(
       z.object({
+        id: z.string(),
         type: z.string().min(3),
         value: z.number(),
       }),
@@ -42,6 +43,7 @@ const recipeShape: ZodShape<RootSchema> = {
   cookTimes: z
     .array(
       z.object({
+        id: z.string(),
         hr: z.string(),
         min: z.string(),
         type: z.string().min(1, "required"),

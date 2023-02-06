@@ -1,5 +1,7 @@
+import { parseMilliseconds } from "@helpers/msFormatter";
 import extractDomain from "extract-domain";
 import interpretDuration from "helpers/interpretDuration";
+import { nanoid } from "nanoid";
 import getRecipeData from "scrape-recipe-schema";
 
 import { allrecipes, eatingwell } from "./alternative-scrapers";
@@ -42,20 +44,24 @@ export async function scrapeRecipe(url: string) {
       const recipe = await getRecipeData({ html: await (await fetch(url)).text() });
       if (recipe.data !== undefined) {
         const recipeData = recipe.data;
-        const newIngredients = recipeData.recipeIngredients.map((ingredient, id) => {
-          return { id: id, item: ingredient };
+        const newIngredients = recipeData.recipeIngredients.map((ingredient) => {
+          return { id: nanoid(), item: ingredient };
         });
-        const newInstructions = recipeData.recipeInstructions.map((instruction, id) => {
-          return { id: id, item: instruction };
+        const newInstructions = recipeData.recipeInstructions.map((instruction) => {
+          return { id: nanoid(), item: instruction };
         });
 
         const convertedCookTimes = [
-          { type: "cookTime", value: convertDuration(recipeData.cookTime) },
-          { type: "prepTime", value: convertDuration(recipeData.prepTime) },
-          { type: "totalTime", value: convertDuration(recipeData.totalTime) },
+          { id: nanoid(), type: "cookTime", value: convertDuration(recipeData.cookTime) },
+          { id: nanoid(), type: "prepTime", value: convertDuration(recipeData.prepTime) },
+          { id: nanoid(), type: "totalTime", value: convertDuration(recipeData.totalTime) },
         ];
 
-        return { ...recipe.data, recipeIngredients: newIngredients, recipeInstructions: newInstructions, url, convertedCookTimes };
+        const parsedCookTimes = convertedCookTimes.map((time) => {
+          return { id: nanoid(), type: time.type, hr: parseMilliseconds(time.value as number).hours.toString(), min: parseMilliseconds(time.value as number).minutes.toString() };
+        });
+
+        return { ...recipe.data, recipeIngredients: newIngredients, recipeInstructions: newInstructions, url, convertedCookTimes, cookTimes: parsedCookTimes };
       }
       throw new Error(recipe.message);
     }

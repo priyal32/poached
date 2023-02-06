@@ -43,7 +43,7 @@ const InstructionFields = React.forwardRef<InstrucitonHandle, Props>(({ control,
           ref={(val) => (instructionsRef.current[id] = val)}
           onInput={(event) => {
             setValue(`recipeInstructions.${id}`, {
-              id: id,
+              id: instruction.id,
               item: event.currentTarget.textContent as string,
             });
           }}

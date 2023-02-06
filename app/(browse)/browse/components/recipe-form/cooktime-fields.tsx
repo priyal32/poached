@@ -1,5 +1,6 @@
 import ErrorMessage from "@components/form/error-message";
 import clsx from "clsx";
+import { nanoid } from "nanoid";
 import React from "react";
 import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
 import { Control, useFieldArray, UseFormRegister, UseFormSetValue } from "react-hook-form";
@@ -35,7 +36,7 @@ const CooktimeFields: React.FunctionComponent<Props> = ({ control, register, err
       {fields.length !== 3 && (
         <button
           type="button"
-          onClick={() => append({ hr: "", min: "", type: "" })}
+          onClick={() => append({ id: nanoid(), hr: "", min: "", type: "" })}
           className="flex items-center justify-center space-x-2 rounded-lg bg-dark-2 p-3 transition-all hover:bg-dark-neutral"
         >
           <BsClock className="h-4 w-4" /> <span className="text-sm capitalize">Add cooking time</span>

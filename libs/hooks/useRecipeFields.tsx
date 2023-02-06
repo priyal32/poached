@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import React from "react";
 import { Control, useFieldArray, UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import { RootSchema } from "types";
@@ -57,7 +58,7 @@ const useRecipeFields = ({ control, targetKey, onEdit, fieldRef, getValues }: Pr
     event.preventDefault();
     append({
       item: "",
-      id: fields.length,
+      id: nanoid(),
     });
   }
 

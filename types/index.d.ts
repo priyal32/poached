@@ -12,10 +12,10 @@ export type RootSchema = {
   prepTime?: string;
   totalTime?: string;
   recipeYield: number | string;
-  recipeIngredients: { item: string; id: number }[];
-  recipeInstructions?: { item: string; id: number }[];
-  convertedCookTimes?: { type: string; value: number }[];
-  cookTimes?: { hr: string; min: string; type: string }[];
+  recipeIngredients: { item: string; id: string }[];
+  recipeInstructions?: { item: string; id: string }[];
+  convertedCookTimes?: { type: string; value: number; id: string }[];
+  cookTimes?: { id: string; hr: string; min: string; type: string }[];
   recipeCategories?: string[];
   recipeCuisines?: string[];
   recipeTypes?: string[];
