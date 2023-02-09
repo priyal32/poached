@@ -14,7 +14,7 @@
   "dependencies": {
     "@hookform/resolvers": "^2.9.11",
     "@next-auth/prisma-adapter": "^1.0.5",
-    "@prisma/client": "^4.10.0",
+    "@prisma/client": "^4.10.1",
     "@radix-ui/colors": "^0.1.8",
     "@radix-ui/react-portal": "^1.0.1",
     "@tailwindcss/nesting": "^0.0.0-insiders.565cd3e",
