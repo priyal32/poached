@@ -46,7 +46,7 @@
     "scrape-recipe-schema": "^0.1.5",
     "sharp": "^0.31.3",
     "zod": "^3.20.6",
-    "zustand": "^4.3.2"
+    "zustand": "^4.3.3"
   },
   "devDependencies": {
     "@mertasan/tailwindcss-variables": "^2.5.1",
