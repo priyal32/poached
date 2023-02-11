@@ -66,7 +66,7 @@ export function UserAuthForm({ className, signingIn, ...props }: UserAuthFormPro
     } else {
       React.startTransition(() => {
         setNotification({ id: toastId, category: "success", message: "Signed in successfully" });
-        router.push("/browse");
+        router.push("/dashboard");
         router.refresh();
       });
     }
