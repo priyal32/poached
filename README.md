@@ -11,13 +11,9 @@
 
 
 ## Table of contents
-- [Poached](#poached)
-  - [Table of contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Features](#features)
-    - [Example](#example)
   - [Getting started](#getting-started)
-  - [⚠ The website that I want to use is not supported](#-the-website-that-i-want-to-use-is-not-supported)
   - [Contributing](#contributing)
   - [Acknowledgements](#acknowledgements)
   - [License](#license)
